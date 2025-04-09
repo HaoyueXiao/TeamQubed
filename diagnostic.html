@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q³ - Course Diagnostic</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            overflow-x: hidden;
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+            width: 70px;
+            background: #1e1e1e;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            display: flex;
+            flex-direction: column;
+            transition: width 0.3s ease;
+            z-index: 1000;
+        }
+
+        .sidebar:hover {
+            width: 240px;
+        }
+
+        /* User Profile Section */
+        .user-profile {
+            height: 80px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0 23px;
+            margin-bottom: 20px;
+        }
+
+        .user-icon {
+            width: 24px;
+            height: 24px;
+            min-width: 24px;
+            background: #6200ee;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: white;
+            transition: all 0.2s ease;
+        }
+
+        .sidebar:hover .user-icon {
+            width: 40px;
+            height: 40px;
+            min-width: 40px;
+            font-size: 16px;
+        }
+
+        .user-name {
+            margin-left: 32px;
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.7);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .sidebar:hover .user-name {
+            opacity: 1;
+        }
+
+        /* Navigation Section */
+        .nav-items {
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            gap: 32px;
+            margin-top: 20px;
+        }
+
+        .nav-item {
+            height: 24px;
+            display: flex;
+            align-items: center;
+            padding: 0 23px;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .nav-item:hover {
+            color: white;
+        }
+
+        .nav-item i {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .nav-item span {
+            margin-left: 32px;
+            font-size: 16px;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .sidebar:hover .nav-item span {
+            opacity: 1;
+        }
+
+        /* Logo Section */
+        .logo-container {
+            margin-top: auto;
+            height: 80px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0 23px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.2s ease;
+            letter-spacing: -1px;
+        }
+
+        .logo:hover {
+            color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 70px;
+            padding: 48px;
+            width: calc(100% - 70px);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            justify-content: flex-start;
+            transition: margin-left 0.3s ease, width 0.3s ease;
+            position: relative;
+            background: #fff;
+        }
+
+        .sidebar:hover ~ .main-content {
+            margin-left: 240px;
+            width: calc(100% - 240px);
+        }
+
+        /* Page Title */
+        .page-title {
+            font-size: 20px;
+            font-weight: normal;
+            color: #333;
+            margin-bottom: 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .menu-button {
+            background: none;
+            border: none;
+            padding: 8px;
+            cursor: pointer;
+            color: #666;
+            opacity: 0.7;
+        }
+
+        /* Course Stats */
+        .grade-chart {
+            background: #7000FF;
+            border-radius: 32px;
+            padding: 32px;
+            margin-bottom: 64px;
+            color: white;
+            height: 280px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .grade-chart-title {
+            font-size: 16px;
+            font-weight: normal;
+            margin-bottom: 48px;
+            opacity: 0.9;
+        }
+
+        .grade-chart-content {
+            flex: 1;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            margin: 0 -32px;
+            padding: 0 32px;
+        }
+
+        .grade-line {
+            stroke: rgba(255, 255, 255, 0.9);
+            stroke-width: 1.5;
+            fill: none;
+        }
+
+        .week-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: auto;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 12px;
+            padding: 0;
+            margin-bottom: -8px;
+        }
+
+        /* Progress Section */
+        .progress-section {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 64px;
+            margin-bottom: 64px;
+            padding: 0 32px;
+        }
+
+        .progress-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .progress-circle {
+            width: 140px;
+            height: 140px;
+            position: relative;
+        }
+
+        .progress-circle svg {
+            transform: rotate(-90deg);
+        }
+
+        .progress-circle circle {
+            fill: none;
+            stroke-width: 1.5;
+        }
+
+        .progress-bg {
+            stroke: #f5f5f5;
+        }
+
+        .progress-value {
+            transition: stroke-dashoffset 0.3s;
+            stroke: #7000FF;
+            opacity: 0.1;
+        }
+
+        .progress-percent {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            font-weight: normal;
+            color: #333;
+        }
+
+        .progress-label {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.4;
+            text-align: center;
+            max-width: 160px;
+            opacity: 0.7;
+        }
+
+        /* Course Info */
+        .course-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 32px;
+        }
+
+        .assignments-total {
+            text-align: right;
+        }
+
+        .assignments-count {
+            font-size: 32px;
+            font-weight: normal;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .assignments-label {
+            font-size: 14px;
+            color: #666;
+            opacity: 0.7;
+        }
+
+        .assignments-chart {
+            width: 40px;
+            height: 40px;
+            opacity: 0.4;
+        }
+
+        .assignments-chart circle {
+            stroke-width: 3;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 48px;
+            background: #f8f9fa;
+            border-radius: 16px;
+            margin: 32px 0;
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            color: #666;
+            margin-bottom: 16px;
+        }
+
+        .empty-state-title {
+            font-size: 20px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .empty-state-text {
+            font-size: 16px;
+            color: #666;
+            max-width: 400px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        /* AI Chat Button */
+        .ai-button {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: #7000FF;
+            border: none;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(112, 0, 255, 0.2);
+            z-index: 1000;
+            transition: transform 0.2s ease;
+        }
+
+        .ai-button:hover {
+            transform: scale(1.05);
+        }
+
+        .ai-button i {
+            font-size: 24px;
+        }
+
+        /* Chat Dialog */
+        .chat-dialog {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 380px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+            display: none;
+            flex-direction: column;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .chat-dialog.active {
+            display: flex;
+        }
+
+        .chat-header {
+            padding: 16px 24px;
+            background: #1e1e1e;
+            color: white;
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-close {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 4px;
+            opacity: 0.7;
+        }
+
+        .chat-messages {
+            flex: 1;
+            min-height: 200px;
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 24px;
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .chat-input {
+            padding: 16px 24px;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .chat-input input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 14px;
+            padding: 8px 0;
+            color: #333;
+        }
+
+        .chat-input input::placeholder {
+            color: #999;
+        }
+
+        .chat-input button {
+            background: none;
+            border: none;
+            color: #7000FF;
+            cursor: pointer;
+            padding: 4px;
+            opacity: 0.9;
+        }
+
+        .chat-input button i {
+            font-size: 20px;
+            transform: rotate(-45deg);
+        }
+
+        /* Message Bubbles */
+        .message-bubble {
+            position: absolute;
+            background: rgba(30, 30, 30, 0.9);
+            border-radius: 16px;
+            padding: 20px 24px;
+            color: white;
+            max-width: 600px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+
+        .message-bubble.user {
+            font-size: 16px;
+            font-style: italic;
+            opacity: 0.9;
+        }
+
+        .message-bubble.ai {
+            margin-top: 16px;
+            line-height: 1.5;
+        }
+
+        .message-bubble.ai h3 {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 16px;
+            opacity: 0.9;
+        }
+
+        .message-bubble.ai ul {
+            margin: 16px 0;
+            padding-left: 20px;
+        }
+
+        .message-bubble.ai li {
+            margin-bottom: 12px;
+        }
+
+        .message-bubble.ai .section-title {
+            font-weight: 500;
+            margin: 20px 0 12px;
+            opacity: 0.9;
+        }
+
+        .message-bubble.ai .suggestion {
+            padding-left: 20px;
+            margin-bottom: 8px;
+        }
+
+        .message-bubble.ai .question {
+            margin-top: 20px;
+            opacity: 0.9;
+        }
+
+        /* Chat Input */
+        .chat-input-container {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 140px);
+            max-width: 800px;
+            background: #1e1e1e;
+            border-radius: 12px;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            z-index: 1000;
+        }
+
+        .chat-input-container .mic-icon {
+            color: white;
+            opacity: 0.7;
+        }
+
+        .chat-input-container input {
+            flex: 1;
+            background: none;
+            border: none;
+            outline: none;
+            color: white;
+            font-size: 14px;
+            padding: 8px 0;
+        }
+
+        .chat-input-container input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .chat-input-container .send-button {
+            background: none;
+            border: none;
+            color: white;
+            opacity: 0.7;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .chat-input-container .send-button i {
+            font-size: 20px;
+            transform: rotate(-45deg);
+        }
+
+        .chat-input-container .alert-icon {
+            color: white;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="user-profile">
+            <div class="user-icon">P</div>
+            <div class="user-name">Professor Sam</div>
+        </div>
+        <nav class="nav-items">
+            <a href="home.html" class="nav-item">
+                <i class="material-icons-round">home</i>
+                <span>Home</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="material-icons-round">search</i>
+                <span>Search</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="material-icons-round">email</i>
+                <span>Email</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="material-icons-round">folder</i>
+                <span>Your Files</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="material-icons-round">settings</i>
+                <span>Settings</span>
+            </a>
+        </nav>
+        <div class="logo-container">
+            <a href="#" class="logo">Q³</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="page-title">
+            Course Diagnostic
+            <button class="menu-button">
+                <i class="material-icons-round">menu</i>
+            </button>
+        </div>
+
+        <div id="courseData">
+            <div class="grade-chart">
+                <div class="grade-chart-title">Course Average Grade</div>
+                <div class="grade-chart-content">
+                    <svg width="100%" height="100%" viewBox="0 0 800 200" preserveAspectRatio="none">
+                        <path class="grade-line" d="M0,100 Q200,95 400,105 T800,100"></path>
+                    </svg>
+                    <div class="week-labels">
+                        <span>WEEK 1</span>
+                        <span>WEEK 2</span>
+                        <span>WEEK 3</span>
+                        <span>WEEK 4</span>
+                        <span>WEEK 5</span>
+                        <span>WEEK 6</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="progress-section">
+                <div class="progress-card">
+                    <div class="progress-circle">
+                        <svg width="160" height="160" viewBox="0 0 160 160">
+                            <circle class="progress-bg" cx="80" cy="80" r="78"/>
+                            <circle class="progress-value progress-purple" cx="80" cy="80" r="78" stroke-dasharray="490.088" stroke-dashoffset="83.315"/>
+                        </svg>
+                        <div class="progress-percent">83%</div>
+                    </div>
+                    <div class="progress-label">students completed assignments on time</div>
+                </div>
+                <div class="progress-card">
+                    <div class="progress-circle">
+                        <svg width="160" height="160" viewBox="0 0 160 160">
+                            <circle class="progress-bg" cx="80" cy="80" r="78"/>
+                            <circle class="progress-value progress-teal" cx="80" cy="80" r="78" stroke-dasharray="490.088" stroke-dashoffset="166.63"/>
+                        </svg>
+                        <div class="progress-percent">66%</div>
+                    </div>
+                    <div class="progress-label">students on track to pass the course</div>
+                </div>
+                <div class="progress-card">
+                    <div class="progress-circle">
+                        <svg width="160" height="160" viewBox="0 0 160 160">
+                            <circle class="progress-bg" cx="80" cy="80" r="78"/>
+                            <circle class="progress-value progress-coral" cx="80" cy="80" r="78" stroke-dasharray="490.088" stroke-dashoffset="333.26"/>
+                        </svg>
+                        <div class="progress-percent">23%</div>
+                    </div>
+                    <div class="progress-label">students received perfect score on assignments</div>
+                </div>
+            </div>
+
+            <div class="course-info">
+                <div class="assignments-chart">
+                    <svg width="48" height="48" viewBox="0 0 48 48">
+                        <circle cx="24" cy="24" r="20" fill="none" stroke="#eee" stroke-width="4"/>
+                        <circle cx="24" cy="24" r="20" fill="none" stroke="#7000FF" stroke-width="4" stroke-dasharray="125.664" stroke-dashoffset="94.248"/>
+                        <circle cx="24" cy="24" r="20" fill="none" stroke="#00bfa5" stroke-width="4" stroke-dasharray="125.664" stroke-dashoffset="104.301"/>
+                        <circle cx="24" cy="24" r="20" fill="none" stroke="#ff7563" stroke-width="4" stroke-dasharray="125.664" stroke-dashoffset="115.359"/>
+                    </svg>
+                </div>
+                <div class="assignments-total">
+                    <div class="assignments-count">31</div>
+                    <div class="assignments-label">Total Assignments</div>
+                </div>
+            </div>
+
+            <div class="message-bubble user">
+                Can you identify the recurring mistakes my students are making in the latest assignment on data structures?
+            </div>
+
+            <div class="message-bubble ai">
+                <h3>Absolutely, Professor. Here's a summary of the recurring mistakes from the latest assignment:</h3>
+                
+                <ol>
+                    <li>Linked Lists: Many students seem to struggle with implementing insert and delete operations correctly. They often confuse the head and tail pointers, resulting in errors during execution.</li>
+                    <li>Binary Trees: There is a common error in the tree traversal functions; specifically, some students are not correctly implementing the in-order traversal, leading to incomplete output.</li>
+                    <li>Array Manipulations: I've noticed that errors frequently occur in boundary checks within loop constructs, which causes out-of-bound errors.</li>
+                </ol>
+
+                <div class="section-title">Suggested Review Topics:</div>
+                <div class="suggestion">• For linked lists, I recommend a review session focusing on pointer manipulation and common operations like insertions and deletions.</div>
+                <div class="suggestion">• A hands-on lab session could help with binary trees, where students can practice different traversal methods and discuss their implementations.</div>
+                <div class="suggestion">• A quick quiz on array boundaries and common pitfalls might reinforce the concepts necessary to handle arrays more effectively.</div>
+
+                <div class="question">Would you like to schedule these review sessions, or do you need detailed examples and additional resources to prepare for the classes?</div>
+            </div>
+        </div>
+
+        <div id="emptyState" class="empty-state" style="display: none;">
+            <i class="material-icons-round empty-state-icon">analytics</i>
+            <h2 class="empty-state-title">No Course Data Available</h2>
+            <p class="empty-state-text">This course doesn't have any students or assignments yet. Add students and create assignments to start seeing analytics and insights here.</p>
+        </div>
+
+        <div class="chat-input-container">
+            <i class="material-icons-round mic-icon">mic</i>
+            <input type="text" placeholder="How can I help you?" id="messageInput">
+            <button class="send-button" onclick="sendMessage()">
+                <i class="material-icons-round">send</i>
+            </button>
+            <i class="material-icons-round alert-icon">error_outline</i>
+        </div>
+    </div>
+
+    <script>
+        // Get courseId from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const courseId = urlParams.get('courseId');
+
+        // Function to check if course has data
+        function checkCourseData() {
+            // This would typically make an API call to check for course data
+            const hasCourseData = false; // Set to false since there's no data yet
+            
+            if (hasCourseData) {
+                document.getElementById('emptyState').style.display = 'none';
+                document.getElementById('courseData').style.display = 'block';
+            } else {
+                document.getElementById('emptyState').style.display = 'block';
+                document.getElementById('courseData').style.display = 'none';
+            }
+        }
+
+        // Call this when the page loads
+        checkCourseData();
+
+        function toggleChat() {
+            const chatDialog = document.querySelector('.chat-dialog');
+            chatDialog.classList.toggle('active');
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // Create user message bubble
+            const userBubble = document.createElement('div');
+            userBubble.className = 'message-bubble user';
+            userBubble.textContent = message;
+            
+            // Add to main content
+            const courseData = document.getElementById('courseData');
+            courseData.appendChild(userBubble);
+            
+            // Clear input
+            input.value = '';
+            
+            // Simulate AI response
+            setTimeout(() => {
+                const aiBubble = document.createElement('div');
+                aiBubble.className = 'message-bubble ai';
+                
+                if (!document.getElementById('courseData').style.display === 'none') {
+                    aiBubble.innerHTML = `
+                        <h3>Absolutely, Professor. Here's a summary of the recurring mistakes from the latest assignment:</h3>
+                        
+                        <ol>
+                            <li>Linked Lists: Many students seem to struggle with implementing insert and delete operations correctly. They often confuse the head and tail pointers, resulting in errors during execution.</li>
+                            <li>Binary Trees: There is a common error in the tree traversal functions; specifically, some students are not correctly implementing the in-order traversal, leading to incomplete output.</li>
+                            <li>Array Manipulations: I've noticed that errors frequently occur in boundary checks within loop constructs, which causes out-of-bound errors.</li>
+                        </ol>
+
+                        <div class="section-title">Suggested Review Topics:</div>
+                        <div class="suggestion">• For linked lists, I recommend a review session focusing on pointer manipulation and common operations like insertions and deletions.</div>
+                        <div class="suggestion">• A hands-on lab session could help with binary trees, where students can practice different traversal methods and discuss their implementations.</div>
+                        <div class="suggestion">• A quick quiz on array boundaries and common pitfalls might reinforce the concepts necessary to handle arrays more effectively.</div>
+
+                        <div class="question">Would you like to schedule these review sessions, or do you need detailed examples and additional resources to prepare for the classes?</div>
+                    `;
+                } else {
+                    aiBubble.innerHTML = "I see that this course doesn't have any data yet. Would you like help setting up your course? I can guide you through adding students and creating assignments.";
+                }
+                
+                courseData.appendChild(aiBubble);
+            }, 1000);
+        }
+
+        // Allow sending message with Enter key
+        document.getElementById('messageInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q³ - Students</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            overflow-x: hidden;
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+            width: 70px;
+            background: #1e1e1e;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            display: flex;
+            flex-direction: column;
+            transition: width 0.3s ease;
+            z-index: 1000;
+        }
+
+        .sidebar:hover {
+            width: 240px;
+        }
+
+        /* User Profile Section */
+        .user-profile {
+            height: 80px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0 23px;
+            margin-bottom: 20px;
+        }
+
+        .user-icon {
+            width: 24px;
+            height: 24px;
+            min-width: 24px;
+            background: #6200ee;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: white;
+            transition: all 0.2s ease;
+        }
+
+        .sidebar:hover .user-icon {
+            width: 40px;
+            height: 40px;
+            min-width: 40px;
+            font-size: 16px;
+        }
+
+        .user-name {
+            margin-left: 32px;
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.7);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .sidebar:hover .user-name {
+            opacity: 1;
+        }
+
+        /* Navigation Section */
+        .nav-items {
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            gap: 32px;
+            margin-top: 20px;
+        }
+
+        .nav-item {
+            height: 24px;
+            display: flex;
+            align-items: center;
+            padding: 0 23px;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .nav-item:hover {
+            color: white;
+        }
+
+        .nav-item i {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .nav-item span {
+            margin-left: 32px;
+            font-size: 16px;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .sidebar:hover .nav-item span {
+            opacity: 1;
+        }
+
+        /* Logo Section */
+        .logo-container {
+            margin-top: auto;
+            height: 80px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0 23px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.2s ease;
+            letter-spacing: -1px;
+        }
+
+        .logo:hover {
+            color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 70px;
+            padding: 32px;
+            width: calc(100% - 70px);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            justify-content: flex-start;
+            transition: margin-left 0.3s ease, width 0.3s ease;
+        }
+
+        .sidebar:hover ~ .main-content {
+            margin-left: 240px;
+            width: calc(100% - 240px);
+        }
+
+        /* Page Title */
+        .page-title {
+            font-size: 20px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 32px;
+            position: relative;
+        }
+
+        /* Empty State */
+        .empty-state {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin: 0;
+            padding: 32px;
+            background: white;
+        }
+
+        .empty-state-text {
+            color: #666;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+
+        .empty-state .add-students-button {
+            background: #6200ee;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .empty-state .add-students-button:hover {
+            background: #5000c9;
+            transform: translateY(-1px);
+        }
+
+        .add-students-button {
+            background: #6200ee;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 15px;
+            transition: background-color 0.2s ease;
+        }
+
+        .add-students-button:hover {
+            background: #5000c9;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 24px;
+            color: #333;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            cursor: pointer;
+            transition: color 0.2s ease;
+            font-size: 20px;
+        }
+
+        .close-modal:hover {
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            resize: vertical;
+            min-height: 120px;
+            font-family: inherit;
+        }
+
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #6200ee;
+            box-shadow: 0 0 0 2px rgba(98, 0, 238, 0.1);
+        }
+
+        .form-hint {
+            font-size: 13px;
+            color: #666;
+            margin-top: 8px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background: #6200ee;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 8px;
+        }
+
+        .submit-btn:hover {
+            background: #5000c9;
+            transform: translateY(-1px);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .import-section {
+            margin: 24px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .import-section::before,
+        .import-section::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: calc(50% - 30px);
+            height: 1px;
+            background: #ddd;
+        }
+
+        .import-section::before {
+            left: 0;
+        }
+
+        .import-section::after {
+            right: 0;
+        }
+
+        .import-text {
+            background: white;
+            padding: 0 16px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .file-upload {
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            padding: 32px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-bottom: 24px;
+        }
+
+        .file-upload:hover {
+            border-color: #6200ee;
+            background: rgba(98, 0, 238, 0.02);
+        }
+
+        .file-upload i {
+            font-size: 48px;
+            color: #666;
+            margin-bottom: 16px;
+        }
+
+        .file-upload-text {
+            font-size: 15px;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .file-upload-hint {
+            font-size: 13px;
+            color: #666;
+        }
+
+        /* Add these new styles */
+        .student-header {
+            width: 100%;
+            margin-bottom: 32px;
+        }
+
+        .search-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 8px;
+            background: #f5f5f5;
+            font-size: 14px;
+            color: #333;
+            transition: all 0.2s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            background: #efefef;
+        }
+
+        .search-input::placeholder {
+            color: #666;
+        }
+
+        .search-clear {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+            cursor: pointer;
+            display: none;
+        }
+
+        .search-input:not(:placeholder-shown) + .search-clear {
+            display: block;
+        }
+
+        .add-student-button {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: #6200ee;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 4px 12px rgba(98, 0, 238, 0.24);
+            transition: all 0.2s ease;
+        }
+
+        .add-student-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(98, 0, 238, 0.32);
+        }
+
+        .add-student-button:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 12px rgba(98, 0, 238, 0.24);
+        }
+
+        .add-student-button i {
+            font-size: 24px;
+        }
+
+        .students-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 0;
+        }
+
+        .students-table th {
+            text-align: left;
+            padding: 12px 16px;
+            color: #333;
+            font-weight: 500;
+            border-bottom: 1px solid #eee;
+            background: white;
+        }
+
+        .students-table td {
+            padding: 16px;
+            color: #333;
+            border-bottom: 1px solid #eee;
+            vertical-align: middle;
+        }
+
+        .student-row {
+            transition: background-color 0.2s ease;
+        }
+
+        .student-row:hover {
+            background-color: #f9f9f9;
+        }
+
+        .student-name {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .student-avatar {
+            width: 32px;
+            height: 32px;
+            background: #455A64;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+        }
+
+        .student-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .student-info .name {
+            font-weight: 500;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .student-info .pronouns {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .grade {
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .caption {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 4px;
+        }
+
+        .report-button {
+            background: #e8fff1;
+            color: #00875a;
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+
+        .report-button:hover {
+            background: #d1ffe3;
+        }
+
+        .access-toggle {
+            position: relative;
+            display: inline-block;
+            width: 36px;
+            height: 20px;
+            vertical-align: middle;
+        }
+
+        .access-toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #eee;
+            transition: .4s;
+            border-radius: 20px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        .access-toggle input:checked + .toggle-slider {
+            background-color: #6200ee;
+        }
+
+        .access-toggle input:checked + .toggle-slider:before {
+            transform: translateX(16px);
+        }
+
+        .access-status {
+            font-size: 13px;
+            color: #ff4444;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+
+        .access-status.active {
+            color: #333;
+        }
+
+        .student-actions {
+            display: flex;
+            gap: 4px;
+        }
+
+        .action-button {
+            width: 32px;
+            height: 32px;
+            border-radius: 4px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            transition: all 0.2s ease;
+        }
+
+        .action-button:hover {
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .action-button i {
+            font-size: 18px;
+        }
+
+        .pagination {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 16px;
+            padding: 16px 0;
+            border-top: 1px solid #eee;
+        }
+
+        .pagination-info {
+            color: #666;
+            font-size: 13px;
+        }
+
+        .pagination-controls {
+            display: flex;
+            gap: 4px;
+        }
+
+        .pagination-button {
+            width: 32px;
+            height: 32px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            transition: all 0.2s ease;
+        }
+
+        .pagination-button:hover:not(:disabled) {
+            background: #f5f5f5;
+            border-color: #d0d0d0;
+        }
+
+        .pagination-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            border-color: #e0e0e0;
+        }
+
+        .pagination-button i {
+            font-size: 20px;
+        }
+
+        /* Update modal styles */
+        .modal-tabs {
+            display: flex;
+            gap: 32px;
+            margin-bottom: 24px;
+        }
+
+        .modal-tab {
+            font-size: 14px;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            padding-bottom: 8px;
+            position: relative;
+        }
+
+        .modal-tab.active {
+            color: #6200ee;
+        }
+
+        .modal-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #6200ee;
+            border-radius: 2px;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .form-field {
+            margin-bottom: 16px;
+        }
+
+        .form-field label {
+            display: block;
+            font-size: 12px;
+            color: #333;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-field input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            background: #f8f9fa;
+            transition: all 0.2s ease;
+        }
+
+        .form-field input:focus {
+            outline: none;
+            border-color: #6200ee;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(98, 0, 238, 0.1);
+        }
+
+        .form-field input::placeholder {
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="user-profile">
+            <div class="user-icon">P</div>
+            <div class="user-name">Professor Sam</div>
+        </div>
+        <nav class="nav-items">
+            <a href="home.html" class="nav-item">
+                <i class="material-icons-round">home</i>
+                <span>Home</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="material-icons-round">search</i>
+                <span>Search</span>
+            </a>
+            <a href="#" class="nav-item active">
+                <i class="material-icons-round">people</i>
+                <span>Students</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="material-icons-round">email</i>
+                <span>Messages</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="material-icons-round">folder</i>
+                <span>Files</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="material-icons-round">settings</i>
+                <span>Settings</span>
+            </a>
+        </nav>
+        <div class="logo-container">
+            <a href="#" class="logo">Q³</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <h1 class="page-title">Students</h1>
+        
+        <div class="student-header">
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="student name" id="searchInput">
+            </div>
+        </div>
+
+        <div id="emptyState" class="empty-state">
+            <p class="empty-state-text">there are currently no students in the course</p>
+            <button class="add-students-button" onclick="showModal(event)">
+                add students
+            </button>
+        </div>
+
+        <button class="add-student-button" onclick="showModal(event)">
+            <i class="material-icons-round">add</i>
+        </button>
+
+        <div id="studentsList" style="display: none;">
+            <table class="students-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Total Grade</th>
+                        <th>Report</th>
+                        <th>Course Access</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="studentsTableBody">
+                    <!-- Students will be added here dynamically -->
+                </tbody>
+            </table>
+
+            <div class="pagination">
+                <span class="pagination-info">1-10 of 100</span>
+                <div class="pagination-controls">
+                    <button class="pagination-button" disabled>
+                        <i class="material-icons-round">first_page</i>
+                    </button>
+                    <button class="pagination-button" disabled>
+                        <i class="material-icons-round">chevron_left</i>
+                    </button>
+                    <button class="pagination-button">
+                        <i class="material-icons-round">chevron_right</i>
+                    </button>
+                    <button class="pagination-button">
+                        <i class="material-icons-round">last_page</i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <h2 class="modal-title">Add Students</h2>
+            <span class="close-modal" onclick="hideModal()">&times;</span>
+            
+            <div class="modal-tabs">
+                <div class="modal-tab active" onclick="switchTab('single')">Add Single Student</div>
+                <div class="modal-tab" onclick="switchTab('import')">Import Students</div>
+            </div>
+
+            <div id="singleStudentTab" class="tab-content active">
+                <form id="addSingleStudentForm" onsubmit="handleAddSingleStudent(event)">
+                    <div class="form-field">
+                        <label for="firstName">First Name</label>
+                        <input type="text" id="firstName" placeholder="Enter first name" required>
+                    </div>
+                    <div class="form-field">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" id="lastName" placeholder="Enter last name" required>
+                    </div>
+                    <div class="form-field">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" placeholder="Enter email address" required>
+                    </div>
+                    <button type="submit" class="submit-btn">Add Student</button>
+                </form>
+            </div>
+
+            <div id="importStudentsTab" class="tab-content">
+                <form id="importStudentsForm" onsubmit="handleImportStudents(event)">
+                    <div class="form-field">
+                        <label for="studentEmails">Student Emails</label>
+                        <textarea id="studentEmails" placeholder="Enter student email addresses, one per line"></textarea>
+                        <p class="form-hint">Enter one email address per line</p>
+                    </div>
+
+                    <div class="import-section">
+                        <span class="import-text">Import Students</span>
+                    </div>
+
+                    <div class="file-upload" onclick="document.getElementById('fileInput').click()">
+                        <input type="file" id="fileInput" style="display: none" accept=".csv,.xlsx,.xls">
+                        <i class="material-icons-round">upload_file</i>
+                        <p class="file-upload-text">Drag and drop student roster here</p>
+                        <p class="file-upload-hint">Supported formats: Excel, CSV, Google Sheets</p>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Import Students</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let students = [];
+        let originalStudents = []; // Store original list for search reset
+        const courseId = new URLSearchParams(window.location.search).get('courseId');
+        let currentPage = 1;
+        const ITEMS_PER_PAGE = 10;
+
+        function showModal(event) {
+            event.preventDefault();
+            document.getElementById('modal').style.display = 'flex';
+            // Reset forms
+            document.getElementById('addSingleStudentForm').reset();
+            document.getElementById('importStudentsForm').reset();
+            // Reset to single student tab
+            switchTab('single');
+        }
+
+        function hideModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        function switchTab(tab) {
+            const tabs = document.querySelectorAll('.modal-tab');
+            const contents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(t => t.classList.remove('active'));
+            contents.forEach(c => c.classList.remove('active'));
+            
+            if (tab === 'single') {
+                tabs[0].classList.add('active');
+                document.getElementById('singleStudentTab').classList.add('active');
+            } else {
+                tabs[1].classList.add('active');
+                document.getElementById('importStudentsTab').classList.add('active');
+            }
+        }
+
+        function handleAddSingleStudent(event) {
+            event.preventDefault();
+            
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            
+            if (!firstName || !lastName || !email) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            const student = {
+                id: Date.now(),
+                firstName,
+                lastName,
+                email,
+                grade: 'N/A',
+                active: true
+            };
+            
+            originalStudents.push(student);
+            students = [...originalStudents];
+            currentPage = Math.ceil(students.length / ITEMS_PER_PAGE); // Go to last page
+            updateDisplay();
+            hideModal();
+        }
+
+        function handleImportStudents(event) {
+            event.preventDefault();
+            const emailsText = document.getElementById('studentEmails').value.trim();
+            
+            if (!emailsText) {
+                alert('Please enter student emails or upload a file');
+                return;
+            }
+            
+            const emails = emailsText.split('\n').map(email => email.trim()).filter(email => email);
+            
+            const newStudents = emails.map(email => ({
+                id: Date.now() + Math.random(),
+                firstName: 'New',
+                lastName: 'Student',
+                email,
+                grade: 'N/A',
+                active: true
+            }));
+            
+            originalStudents = [...originalStudents, ...newStudents];
+            students = [...originalStudents];
+            currentPage = Math.ceil(students.length / ITEMS_PER_PAGE); // Go to last page
+            updateDisplay();
+            hideModal();
+        }
+
+        function updateDisplay() {
+            const emptyState = document.getElementById('emptyState');
+            const studentsList = document.getElementById('studentsList');
+            const tbody = document.getElementById('studentsTableBody');
+            const floatingAddButton = document.querySelector('.add-student-button');
+            const paginationInfo = document.querySelector('.pagination-info');
+            const prevButton = document.querySelector('.pagination-button:nth-child(2)');
+            const nextButton = document.querySelector('.pagination-button:nth-child(3)');
+            const firstButton = document.querySelector('.pagination-button:nth-child(1)');
+            const lastButton = document.querySelector('.pagination-button:nth-child(4)');
+            
+            // Hide floating button when no students
+            floatingAddButton.style.display = students.length > 0 ? 'flex' : 'none';
+            
+            if (students.length > 0) {
+                emptyState.style.display = 'none';
+                studentsList.style.display = 'block';
+
+                // Calculate pagination
+                const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+                const endIndex = Math.min(startIndex + ITEMS_PER_PAGE, students.length);
+                const totalPages = Math.ceil(students.length / ITEMS_PER_PAGE);
+
+                // Update pagination info
+                paginationInfo.textContent = `${startIndex + 1}-${endIndex} of ${students.length}`;
+
+                // Update pagination buttons
+                prevButton.disabled = currentPage === 1;
+                nextButton.disabled = currentPage === totalPages;
+                firstButton.disabled = currentPage === 1;
+                lastButton.disabled = currentPage === totalPages;
+                
+                // Get current page students
+                const currentStudents = students.slice(startIndex, endIndex);
+                
+                tbody.innerHTML = currentStudents.map(student => `
+                    <tr class="student-row">
+                        <td>
+                            <div class="student-name">
+                                <div class="student-avatar">${student.firstName[0]}${student.lastName[0]}</div>
+                                <div class="student-info">
+                                    <div class="name">${student.firstName} ${student.lastName}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="grade">N/A</td>
+                        <td>
+                            <button class="report-button">Get Report</button>
+                        </td>
+                        <td>
+                            <label class="access-toggle">
+                                <input type="checkbox" ${student.active ? 'checked' : ''} onchange="toggleAccess(${student.id})">
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <span class="access-status ${student.active ? 'active' : ''}">
+                                ${student.active ? 'Active' : 'Inactive'}
+                            </span>
+                        </td>
+                        <td>
+                            <div class="student-actions">
+                                <button class="action-button" onclick="editStudent(${student.id})">
+                                    <i class="material-icons-round">edit</i>
+                                </button>
+                                <button class="action-button" onclick="deleteStudent(${student.id})">
+                                    <i class="material-icons-round">delete</i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `).join('');
+            } else {
+                emptyState.style.display = 'flex';
+                studentsList.style.display = 'none';
+            }
+        }
+
+        function toggleAccess(studentId) {
+            const student = students.find(s => s.id === studentId);
+            if (student) {
+                student.active = !student.active;
+                updateDisplay();
+            }
+        }
+
+        function editStudent(studentId) {
+            // Implement edit functionality
+            console.log('Edit student:', studentId);
+        }
+
+        function deleteStudent(studentId) {
+            if (confirm('Are you sure you want to delete this student?')) {
+                originalStudents = originalStudents.filter(s => s.id !== studentId);
+                students = students.filter(s => s.id !== studentId);
+                if (students.length === 0) {
+                    currentPage = 1;
+                } else if (students.length <= (currentPage - 1) * ITEMS_PER_PAGE) {
+                    currentPage--;
+                }
+                updateDisplay();
+            }
+        }
+
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            document.querySelector('.search-clear').style.display = 'none';
+        }
+
+        // Add pagination functions
+        function goToFirstPage() {
+            currentPage = 1;
+            updateDisplay();
+        }
+
+        function goToPrevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                updateDisplay();
+            }
+        }
+
+        function goToNextPage() {
+            const totalPages = Math.ceil(students.length / ITEMS_PER_PAGE);
+            if (currentPage < totalPages) {
+                currentPage++;
+                updateDisplay();
+            }
+        }
+
+        function goToLastPage() {
+            currentPage = Math.ceil(students.length / ITEMS_PER_PAGE);
+            updateDisplay();
+        }
+
+        // Update pagination buttons onclick handlers
+        document.querySelectorAll('.pagination-button').forEach((button, index) => {
+            button.addEventListener('click', () => {
+                switch(index) {
+                    case 0: goToFirstPage(); break;
+                    case 1: goToPrevPage(); break;
+                    case 2: goToNextPage(); break;
+                    case 3: goToLastPage(); break;
+                }
+            });
+        });
+
+        // Update search functionality
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            if (!searchTerm) {
+                students = [...originalStudents];
+            } else {
+                students = originalStudents.filter(student => 
+                    student.firstName.toLowerCase().includes(searchTerm) ||
+                    student.lastName.toLowerCase().includes(searchTerm) ||
+                    student.email.toLowerCase().includes(searchTerm)
+                );
+            }
+            currentPage = 1; // Reset to first page when searching
+            updateDisplay();
+        });
+
+        // Initialize
+        updateDisplay();
+
+        // File upload handling
+        document.getElementById('fileInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                // Here you would typically process the file
+                // For now, just show a message
+                alert('File upload functionality will be implemented soon');
+            }
+        });
+    </script>
+</body>
+</html> 

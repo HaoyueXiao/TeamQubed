@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Q³ - Login</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -13,150 +14,236 @@
         }
 
         body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background-color: #f5f5f5;
             min-height: 100vh;
-            background-color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .login-container {
-            width: 50%;
-            max-width: none;
-            padding: 60px;
             background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
+            padding: 40px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 32px;
         }
 
         .logo {
-            text-align: center;
-            margin-bottom: 40px;
-            font-size: 72px;
+            font-size: 48px;
             font-weight: bold;
-        }
-
-        .form-group {
-            margin-bottom: 30px;
-        }
-
-        .form-group label {
+            color: #1e1e1e;
+            text-decoration: none;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
             display: block;
-            margin-bottom: 8px;
+        }
+
+        .login-title {
+            font-size: 24px;
             color: #333;
+            margin-bottom: 8px;
+        }
+
+        .login-subtitle {
             font-size: 14px;
+            color: #666;
         }
 
-        .form-group input {
+        .form-field {
+            margin-bottom: 24px;
+        }
+
+        .form-field label {
+            display: block;
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-field input {
             width: 100%;
-            padding: 16px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
+            padding: 12px 16px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
             font-size: 16px;
-            transition: all 0.3s ease;
+            background: #f8f9fa;
+            transition: all 0.2s ease;
         }
 
-        .form-group input:focus {
+        .form-field input:focus {
             outline: none;
-            border-color: #666;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-color: #6200ee;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(98, 0, 238, 0.1);
         }
 
-        .sign-in-button {
+        .login-button {
             width: 100%;
-            padding: 16px;
-            background: #333;
+            padding: 14px;
+            background: #6200ee;
             color: white;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 16px;
+            font-weight: 500;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
 
-        .sign-in-button:hover {
-            background: #444;
+        .login-button:hover {
+            background: #5000c9;
             transform: translateY(-1px);
         }
 
-        .sign-in-button:active {
+        .login-button:active {
             transform: translateY(0);
         }
 
-        .forgot-password {
-            display: block;
+        .toggle-form {
+            text-align: center;
             margin-top: 16px;
-            color: #666;
-            text-decoration: none;
-            font-size: 14px;
         }
 
-        .forgot-password:hover {
-            color: #333;
+        .toggle-form a {
+            color: #6200ee;
+            text-decoration: none;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .toggle-form a:hover {
             text-decoration: underline;
         }
 
-        /* Loading animation */
-        .loading {
-            opacity: 0.7;
-            pointer-events: none;
-            position: relative;
+        .error-message {
+            color: #d32f2f;
+            font-size: 14px;
+            margin-top: 8px;
+            text-align: center;
+            display: none;
         }
 
-        .loading::after {
-            content: '';
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            top: 50%;
-            left: 50%;
-            margin: -10px 0 0 -10px;
-            border: 2px solid #ffffff;
-            border-top-color: transparent;
-            border-radius: 50%;
-            animation: loading 0.6s linear infinite;
+        #registerForm {
+            display: none;
         }
 
-        @keyframes loading {
-            to {
-                transform: rotate(360deg);
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 32px 24px;
             }
         }
     </style>
 </head>
 <body>
     <div class="login-container">
-        <div class="logo">Q³</div>
+        <div class="login-header">
+            <a href="#" class="logo">Q³</a>
+            <h1 class="login-title">Welcome</h1>
+            <p class="login-subtitle">Please enter your credentials to continue</p>
+        </div>
+
         <form id="loginForm" onsubmit="handleLogin(event)">
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" placeholder="Value" required>
+            <div class="form-field">
+                <label for="loginEmail">Email</label>
+                <input type="email" id="loginEmail" required placeholder="Enter your email">
             </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" placeholder="Value" required>
+
+            <div class="form-field">
+                <label for="loginPassword">Password</label>
+                <input type="password" id="loginPassword" required placeholder="Enter your password">
             </div>
-            <button type="submit" class="sign-in-button">Sign In</button>
-            <a href="#" class="forgot-password">Forgot password?</a>
+
+            <button type="submit" class="login-button">Sign in</button>
+            <div id="loginError" class="error-message"></div>
         </form>
+
+        <form id="registerForm" onsubmit="handleRegister(event)">
+            <div class="form-field">
+                <label for="registerName">Full Name</label>
+                <input type="text" id="registerName" required placeholder="Enter your full name">
+            </div>
+
+            <div class="form-field">
+                <label for="registerEmail">Email</label>
+                <input type="email" id="registerEmail" required placeholder="Enter your email">
+            </div>
+
+            <div class="form-field">
+                <label for="registerPassword">Password</label>
+                <input type="password" id="registerPassword" required placeholder="Choose a password">
+            </div>
+
+            <button type="submit" class="login-button">Create Account</button>
+            <div id="registerError" class="error-message"></div>
+        </form>
+
+        <div class="toggle-form">
+            <a id="toggleForm">Don't have an account? Sign up</a>
+        </div>
     </div>
 
+    <script src="auth.js"></script>
     <script>
+        // Check if user is already logged in
+        if (auth.isLoggedIn()) {
+            window.location.href = 'home.html';
+        }
+
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+        const toggleButton = document.getElementById('toggleForm');
+        const loginTitle = document.querySelector('.login-title');
+        const loginSubtitle = document.querySelector('.login-subtitle');
+
+        function toggleForms() {
+            const isLogin = loginForm.style.display !== 'none';
+            loginForm.style.display = isLogin ? 'none' : 'block';
+            registerForm.style.display = isLogin ? 'block' : 'none';
+            toggleButton.textContent = isLogin ? "Already have an account? Sign in" : "Don't have an account? Sign up";
+            loginTitle.textContent = isLogin ? 'Create Account' : 'Welcome';
+            loginSubtitle.textContent = isLogin ? 'Please fill in your details' : 'Please enter your credentials to continue';
+        }
+
+        toggleButton.addEventListener('click', toggleForms);
+
         function handleLogin(event) {
             event.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const errorDiv = document.getElementById('loginError');
             
-            const button = event.target.querySelector('.sign-in-button');
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            
-            // Add loading state
-            button.classList.add('loading');
-            
-            // Simulate authentication (replace with actual authentication)
-            setTimeout(() => {
-                // For demo purposes, any input will work
+            try {
+                auth.login(email, password);
                 window.location.href = 'home.html';
-            }, 1000);
+            } catch (error) {
+                errorDiv.textContent = error.message;
+                errorDiv.style.display = 'block';
+            }
+        }
+
+        function handleRegister(event) {
+            event.preventDefault();
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const errorDiv = document.getElementById('registerError');
+            
+            try {
+                auth.register(name, email, password);
+                auth.login(email, password);
+                window.location.href = 'home.html';
+            } catch (error) {
+                errorDiv.textContent = error.message;
+                errorDiv.style.display = 'block';
+            }
         }
     </script>
 </body>

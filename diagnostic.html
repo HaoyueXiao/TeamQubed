@@ -593,20 +593,12 @@
                 <span>Home</span>
             </a>
             <a href="#" class="nav-item">
-                <i class="material-icons-round">search</i>
-                <span>Search</span>
-            </a>
-            <a href="#" class="nav-item">
-                <i class="material-icons-round">email</i>
-                <span>Email</span>
-            </a>
-            <a href="#" class="nav-item">
-                <i class="material-icons-round">folder</i>
-                <span>Your Files</span>
-            </a>
-            <a href="#" class="nav-item">
                 <i class="material-icons-round">settings</i>
                 <span>Settings</span>
+            </a>
+            <a href="#" class="nav-item" onclick="handleLogout()">
+                <i class="material-icons-round">logout</i>
+                <span>Log out</span>
             </a>
         </nav>
         <div class="logo-container">
@@ -726,23 +718,33 @@
         </div>
     </div>
 
+    <script src="auth.js"></script>
     <script>
-        // Get courseId from URL parameters
-        const urlParams = new URLSearchParams(window.location.search);
-        const courseId = urlParams.get('courseId');
+        // Protect this route
+        protectRoute();
 
-        // Function to check if course has data
+        // Update user name in sidebar
+        const currentUser = auth.getCurrentUser();
+        document.querySelector('.user-name').textContent = currentUser.name;
+        document.querySelector('.user-icon').textContent = currentUser.name.charAt(0);
+
+        const courseId = new URLSearchParams(window.location.search).get('courseId');
+        let currentCourse = auth.getUserCourses().find(c => c.id === parseInt(courseId));
+        
+        if (!currentCourse) {
+            window.location.href = 'home.html';
+        }
+
+        function handleLogout() {
+            auth.logout();
+        }
+
+        // Check if course has data
         function checkCourseData() {
-            // This would typically make an API call to check for course data
-            const hasCourseData = false; // Set to false since there's no data yet
-            
-            if (hasCourseData) {
-                document.getElementById('emptyState').style.display = 'none';
-                document.getElementById('courseData').style.display = 'block';
-            } else {
-                document.getElementById('emptyState').style.display = 'block';
-                document.getElementById('courseData').style.display = 'none';
-            }
+            const hasCourseData = currentCourse && currentCourse.students && currentCourse.students.length > 0;
+            document.getElementById('emptyState').style.display = hasCourseData ? 'none' : 'flex';
+            document.getElementById('courseData').style.display = hasCourseData ? 'block' : 'none';
+            return hasCourseData;
         }
 
         // Call this when the page loads

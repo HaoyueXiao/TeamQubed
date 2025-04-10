@@ -476,181 +476,149 @@
 
         .modal-content {
             background: white;
-            border-radius: 12px;
-            padding: 32px;
+            border-radius: 16px;
             width: 90%;
             max-width: 500px;
             position: relative;
+            padding: 40px;
         }
 
-        .modal-title {
-            font-size: 24px;
+        .modal-content h2 {
+            font-size: 32px;
             font-weight: 600;
-            margin-bottom: 24px;
-            color: #333;
+            margin-bottom: 32px;
+            color: #000;
         }
 
-        .close-modal {
+        .close-button {
             position: absolute;
             top: 24px;
             right: 24px;
-            font-size: 24px;
-            color: #666;
+            background: none;
+            border: none;
             cursor: pointer;
-            transition: color 0.2s ease;
+            padding: 8px;
         }
 
-        .close-modal:hover {
-            color: #ff4444;
+        .close-button i {
+            font-size: 24px;
+            color: #666;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
 
         .form-group label {
             display: block;
-            font-size: 14px;
-            color: #333;
+            font-size: 16px;
+            color: #000;
             margin-bottom: 8px;
+            font-weight: 500;
         }
 
-        .form-group input,
+        .form-group input[type="text"] {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #E0E0E0;
+            border-radius: 8px;
+            font-size: 16px;
+            background: #F8F9FC;
+        }
+
+        .form-group input[type="text"]::placeholder {
+            color: #666;
+        }
+
         .form-group select {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
+            padding: 12px 16px;
+            border: 1px solid #E0E0E0;
+            border-radius: 8px;
             font-size: 16px;
-            transition: all 0.2s ease;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: #6200ee;
-            box-shadow: 0 0 0 2px rgba(98, 0, 238, 0.1);
+            background: #fff;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%23666666' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            color: #666;
         }
 
         .form-group textarea {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 14px;
-            resize: vertical;
-            min-height: 80px;
-            font-family: inherit;
-            line-height: 1.5;
-            transition: all 0.2s ease;
-        }
-
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #6200ee;
-            box-shadow: 0 0 0 2px rgba(98, 0, 238, 0.1);
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 12px;
-            background: #6200ee;
-            color: white;
-            border: none;
-            border-radius: 6px;
+            padding: 12px 16px;
+            border: 1px solid #E0E0E0;
+            border-radius: 8px;
             font-size: 16px;
-            cursor: pointer;
-            transition: all 0.2s ease;
+            resize: vertical;
+            min-height: 120px;
+            font-family: inherit;
+            background: #fff;
         }
 
-        .submit-btn:hover {
-            background: #5000c9;
+        .import-section {
+            margin-top: 8px;
         }
 
-        .drag-drop {
-            border: 2px dashed #ddd;
-            border-radius: 6px;
-            padding: 32px;
-            text-align: center;
-            margin: 20px 0;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            position: relative;
-        }
-
-        .drag-drop.drag-over {
-            border-color: #6200ee;
-            background: rgba(98, 0, 238, 0.05);
-        }
-
-        .drag-drop input[type="file"] {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            opacity: 0;
-            cursor: pointer;
-        }
-
-        .drag-drop .upload-icon {
-            font-size: 32px;
-            color: #666;
-            margin-bottom: 8px;
-        }
-
-        .drag-drop .upload-text {
-            margin-bottom: 4px;
-        }
-
-        .drag-drop .upload-hint {
-            color: #666;
-            font-size: 13px;
-        }
-
-        .file-preview {
-            display: none;
-            margin-top: 16px;
-            padding: 12px;
-            background: #f5f5f5;
-            border-radius: 4px;
-        }
-
-        .file-preview .file-info {
-            display: flex;
+        .import-button {
+            display: inline-flex;
             align-items: center;
             gap: 8px;
-        }
-
-        .file-preview .file-name {
-            font-size: 14px;
-            color: #333;
-            flex-grow: 1;
-        }
-
-        .file-preview .remove-file {
-            color: #ff4444;
+            padding: 8px 16px;
+            background: #fff;
+            border: 1px solid #E0E0E0;
+            border-radius: 8px;
+            color: #000;
+            font-size: 16px;
             cursor: pointer;
-            padding: 4px;
         }
 
-        .file-preview .file-meta {
-            font-size: 12px;
+        .import-button i {
+            font-size: 20px;
             color: #666;
-            margin-top: 4px;
         }
 
-        .date-group {
+        .file-info {
+            margin-left: 12px;
+            color: #666;
+            font-size: 16px;
+        }
+
+        .import-help {
+            margin-top: 8px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .template-link {
+            color: #6200EE;
+            text-decoration: none;
+            margin-left: 16px;
+        }
+
+        .modal-footer {
+            margin-top: 32px;
             display: flex;
+            justify-content: flex-start;
             gap: 16px;
         }
 
-        .date-field {
-            flex: 1;
+        .modal-footer button {
+            padding: 8px 16px;
+            font-size: 16px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            border-radius: 4px;
         }
 
-        .date-field input[type="date"] {
-            width: 100%;
+        .modal-footer .secondary-button {
+            color: #000;
+        }
+
+        .modal-footer .primary-button {
+            color: #000;
+            font-weight: 500;
         }
 
         /* Add these styles */
@@ -813,25 +781,17 @@
             <span class="user-name">Professor Sam</span>
         </div>
         <nav class="nav-items">
-            <a href="#" class="nav-item">
+            <a href="home.html" class="nav-item">
                 <i class="material-icons-round">home</i>
                 <span>Home</span>
             </a>
             <a href="#" class="nav-item">
-                <i class="material-icons-round">search</i>
-                <span>Search</span>
-            </a>
-            <a href="#" class="nav-item">
-                <i class="material-icons-round">email</i>
-                <span>Email</span>
-            </a>
-            <a href="#" class="nav-item">
-                <i class="material-icons-round">folder</i>
-                <span>Your Files</span>
-            </a>
-            <a href="#" class="nav-item">
                 <i class="material-icons-round">settings</i>
                 <span>Settings</span>
+            </a>
+            <a href="#" class="nav-item" onclick="handleLogout()">
+                <i class="material-icons-round">logout</i>
+                <span>Log out</span>
             </a>
         </nav>
         <div class="logo-container">
@@ -852,55 +812,55 @@
     </div>
 
     <!-- Add Course Modal -->
-    <div id="modal" class="modal">
+    <div id="addCourseModal" class="modal">
         <div class="modal-content">
-            <span class="close-modal" onclick="hideModal()">&times;</span>
-            <h2 class="modal-title">Add New Course</h2>
-            <form id="addCourseForm" onsubmit="handleAddCourse(event)">
-                <div class="form-group">
-                    <label for="courseName">Course Name</label>
-                    <input type="text" id="courseName" required placeholder="Enter the course name">
+            <h2>Add New Course</h2>
+            <button class="close-button" onclick="hideModal('addCourseModal')">
+                <i class="material-icons-round">close</i>
+            </button>
+
+            <div class="form-group">
+                <label>Course Name</label>
+                <input type="text" id="courseName" placeholder="e.g. CS 160">
+            </div>
+
+            <div class="form-group">
+                <label>Subject</label>
+                <select id="courseSubject">
+                    <option value="">Select a subject</option>
+                    <option value="Computer Science">Computer Science</option>
+                    <option value="Mathematics">Mathematics</option>
+                    <option value="Physics">Physics</option>
+                    <option value="Chemistry">Chemistry</option>
+                    <option value="Biology">Biology</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Course Description</label>
+                <textarea id="courseDescription" rows="4"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Import Students</label>
+                <div class="import-section">
+                    <input type="file" id="studentFile" accept=".csv,.xlsx,.xls" style="display: none;">
+                    <button class="import-button" onclick="document.getElementById('studentFile').click()">
+                        <i class="material-icons-round">upload_file</i>
+                        Choose File
+                    </button>
+                    <span class="file-info">No file chosen</span>
                 </div>
-                <div class="form-group">
-                    <label for="subject">Subject</label>
-                    <select id="subject" required>
-                        <option value="">Select a subject</option>
-                        <option value="Computer Science">Computer Science</option>
-                        <option value="Mathematics">Mathematics</option>
-                        <option value="Physics">Physics</option>
-                        <option value="Chemistry">Chemistry</option>
-                    </select>
+                <div class="import-help">
+                    Supported formats: Excel, CSV
+                    <a href="#" class="template-link">Download template</a>
                 </div>
-                <div class="form-group">
-                    <label for="description">Course Description</label>
-                    <textarea id="description" rows="3" required placeholder="Enter a brief description of the course"></textarea>
-                </div>
-                <div class="form-group date-group">
-                    <div class="date-field">
-                        <label for="beginDate">Begin Date</label>
-                        <input type="date" id="beginDate" required>
-                    </div>
-                    <div class="date-field">
-                        <label for="endDate">End Date</label>
-                        <input type="date" id="endDate" required>
-                    </div>
-                </div>
-                <div class="drag-drop" id="dragDrop">
-                    <input type="file" id="fileInput" accept=".xlsx,.xls,.csv,.gsheet" onchange="handleFileSelect(event)">
-                    <i class="material-icons-round upload-icon">upload_file</i>
-                    <p class="upload-text">Drag and drop student roster here</p>
-                    <p class="upload-hint">Supported formats: Excel, CSV, Google Sheets</p>
-                    <div class="file-preview" id="filePreview">
-                        <div class="file-info">
-                            <i class="material-icons-round" style="color: #666;">description</i>
-                            <span class="file-name" id="fileName">filename.xlsx</span>
-                            <i class="material-icons-round remove-file" onclick="removeFile()">close</i>
-                        </div>
-                        <div class="file-meta" id="fileMeta">0 students</div>
-                    </div>
-                </div>
-                <button type="submit" class="submit-btn">Create Course</button>
-            </form>
+            </div>
+
+            <div class="modal-footer">
+                <button class="secondary-button" onclick="hideModal('addCourseModal')">Cancel</button>
+                <button class="primary-button" onclick="handleAddCourse()">Create Course</button>
+            </div>
         </div>
     </div>
 
@@ -925,59 +885,161 @@
         </div>
     </div>
 
+    <script src="auth.js"></script>
     <script>
-        let courses = [];
+        // Protect this route
+        protectRoute();
+
+        // Update user name in sidebar
+        const currentUser = auth.getCurrentUser();
+        document.querySelector('.user-name').textContent = currentUser.name;
+        document.querySelector('.user-icon').textContent = currentUser.name.charAt(0);
+
+        let courses = auth.getUserCourses();
         let courseToDeleteId = null;
+
+        function handleLogout() {
+            auth.logout();
+        }
 
         function showModal(event) {
             event.preventDefault();
-            document.getElementById('modal').style.display = 'flex';
+            document.getElementById('addCourseModal').style.display = 'flex';
         }
 
-        function hideModal() {
-            document.getElementById('modal').style.display = 'none';
-            document.getElementById('addCourseForm').reset();
+        function hideModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            resetForm();
         }
 
         function handleAddCourse(event) {
-            event.preventDefault();
-            
+            if (event) event.preventDefault();
             const courseName = document.getElementById('courseName').value;
-            const subject = document.getElementById('subject').value;
-            const description = document.getElementById('description').value;
-            const beginDate = document.getElementById('beginDate').value;
-            const endDate = document.getElementById('endDate').value;
-            
-            // Create a course code based on subject and course name
-            const subjectCode = subject.split(' ')[0].toUpperCase();
-            const courseNumber = Math.floor(Math.random() * (199 - 100) + 100);
-            const courseCode = `${subjectCode} ${courseNumber}`;
-            
-            // Fix timezone issue by adding the timezone offset
-            const formatDate = (dateString) => {
-                const date = new Date(dateString);
-                date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
-                return date.toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                });
-            };
-            
-            const course = {
+            const courseSubject = document.getElementById('courseSubject').value;
+            const description = document.getElementById('courseDescription').value;
+            const studentFile = document.getElementById('studentFile').files[0];
+
+            if (!courseName || !courseSubject) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            const newCourse = {
                 id: Date.now(),
-                code: courseCode,
                 name: courseName,
-                subject: subject,
-                description: description,
-                beginDate: formatDate(beginDate),
-                endDate: formatDate(endDate)
+                subject: courseSubject,
+                description: description || '',
+                students: []
             };
-            
-            courses.push(course);
-            updateDisplay();
-            hideModal();
+
+            // Process student file if one was uploaded
+            if (studentFile) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const content = e.target.result;
+                        const lines = content.split('\n');
+                        
+                        // Skip header row and process each line
+                        for (let i = 1; i < lines.length; i++) {
+                            const line = lines[i].trim();
+                            if (line) {
+                                const values = line.split(',').map(field => field.trim());
+                                const [firstName, lastName, email, studentId, midterm, ...assignments] = values;
+                                
+                                if (firstName && lastName && email) {
+                                    // Extract assignments (Assignment 1, Assignment 2, Assignment 3)
+                                    const [assignment1, assignment2, assignment3] = assignments;
+                                    
+                                    // Extract homework grades (HW1, HW2, HW3)
+                                    const [hw1, hw2, hw3] = assignments.slice(3, 6);
+                                    
+                                    // Extract final grade and comments
+                                    const final = assignments[6];
+                                    const comments = assignments[7];
+
+                                    // Calculate total grade (weighted average)
+                                    const midtermWeight = 0.25;
+                                    const finalWeight = 0.35;
+                                    const assignmentWeight = 0.25; // Split between 3 assignments
+                                    const homeworkWeight = 0.15; // Split between 3 homeworks
+
+                                    const midtermGrade = parseFloat(midterm) || 0;
+                                    const finalGrade = parseFloat(final) || 0;
+                                    const assignment1Grade = parseFloat(assignment1) || 0;
+                                    const assignment2Grade = parseFloat(assignment2) || 0;
+                                    const assignment3Grade = parseFloat(assignment3) || 0;
+                                    const hw1Grade = parseFloat(hw1) || 0;
+                                    const hw2Grade = parseFloat(hw2) || 0;
+                                    const hw3Grade = parseFloat(hw3) || 0;
+
+                                    const totalGrade = (
+                                        midtermGrade * midtermWeight +
+                                        finalGrade * finalWeight +
+                                        ((assignment1Grade + assignment2Grade + assignment3Grade) / 3) * assignmentWeight +
+                                        ((hw1Grade + hw2Grade + hw3Grade) / 3) * homeworkWeight
+                                    );
+
+                                    newCourse.students.push({
+                                        id: studentId || Date.now() + i,
+                                        firstName,
+                                        lastName,
+                                        email,
+                                        active: true,
+                                        grade: Math.round(totalGrade), // Rounded total grade
+                                        grades: {
+                                            midterm: midtermGrade,
+                                            final: finalGrade,
+                                            assignments: [
+                                                { name: 'Assignment 1', grade: assignment1Grade },
+                                                { name: 'Assignment 2', grade: assignment2Grade },
+                                                { name: 'Assignment 3', grade: assignment3Grade },
+                                                { name: 'HW1', grade: hw1Grade },
+                                                { name: 'HW2', grade: hw2Grade },
+                                                { name: 'HW3', grade: hw3Grade }
+                                            ]
+                                        },
+                                        comments: comments || ''
+                                    });
+                                }
+                            }
+                        }
+                        
+                        // Add course and update display after processing students
+                        auth.addCourse(newCourse);
+                        courses = auth.getUserCourses();
+                        updateDisplay();
+                        hideModal('addCourseModal');
+                        resetForm();
+                    } catch (error) {
+                        console.error('Error processing student file:', error);
+                        alert('Error processing student file. Please check the format and try again.');
+                    }
+                };
+                reader.readAsText(studentFile);
+            } else {
+                // Add course without students
+                auth.addCourse(newCourse);
+                courses = auth.getUserCourses();
+                updateDisplay();
+                hideModal('addCourseModal');
+                resetForm();
+            }
         }
+
+        function resetForm() {
+            document.getElementById('courseName').value = '';
+            document.getElementById('courseSubject').value = '';
+            document.getElementById('courseDescription').value = '';
+            document.getElementById('studentFile').value = '';
+            document.querySelector('.file-info').textContent = 'No file chosen';
+        }
+
+        // Initialize courses on page load
+        window.addEventListener('load', function() {
+            courses = auth.getUserCourses();
+            updateDisplay();
+        });
 
         function updateDisplay() {
             const emptyState = document.getElementById('emptyState');
@@ -1008,10 +1070,6 @@
                                             <i class="material-icons-round">people</i>
                                             View Students
                                         </div>
-                                        <div class="menu-item" onclick="editCourseImage(${course.id})">
-                                            <i class="material-icons-round">image</i>
-                                            Edit Course Image
-                                        </div>
                                         <div class="menu-item delete" onclick="deleteCourse(${course.id})">
                                             <i class="material-icons-round">delete</i>
                                             Delete Course
@@ -1022,10 +1080,6 @@
                             <div class="course-content">
                                 <div class="course-info">
                                     <div class="course-description">${course.description}</div>
-                                    <div class="course-dates">
-                                        <div><span>Start:</span> ${course.beginDate}</div>
-                                        <div><span>End:</span> ${course.endDate}</div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1038,58 +1092,21 @@
 
         // Close modal when clicking outside
         window.onclick = function(event) {
-            const modal = document.getElementById('modal');
+            const modal = document.getElementById('addCourseModal');
             const deleteModal = document.getElementById('deleteModal');
             if (event.target === modal) {
-                hideModal();
+                hideModal('addCourseModal');
             }
             if (event.target === deleteModal) {
                 cancelDelete();
             }
         }
 
-        function handleFileSelect(event) {
-            const file = event.target.files[0];
-            if (file) {
-                showFilePreview(file);
-            }
-        }
-
-        function showFilePreview(file) {
-            const filePreview = document.getElementById('filePreview');
-            const fileName = document.getElementById('fileName');
-            const fileMeta = document.getElementById('fileMeta');
-            
-            fileName.textContent = file.name;
-            fileMeta.textContent = `${formatBytes(file.size)} • Uploaded just now`;
-            filePreview.style.display = 'block';
-            
-            // Hide the upload text while showing preview
-            document.querySelector('.upload-text').style.display = 'none';
-            document.querySelector('.upload-hint').style.display = 'none';
-            document.querySelector('.upload-icon').style.display = 'none';
-        }
-
-        function removeFile() {
-            const fileInput = document.getElementById('fileInput');
-            const filePreview = document.getElementById('filePreview');
-            
-            fileInput.value = '';
-            filePreview.style.display = 'none';
-            
-            // Show the upload text again
-            document.querySelector('.upload-text').style.display = 'block';
-            document.querySelector('.upload-hint').style.display = 'block';
-            document.querySelector('.upload-icon').style.display = 'block';
-        }
-
-        function formatBytes(bytes) {
-            if (bytes === 0) return '0 Bytes';
-            const k = 1024;
-            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-            const i = Math.floor(Math.log(bytes) / Math.log(k));
-            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-        }
+        // Add file input change handler
+        document.getElementById('studentFile').addEventListener('change', function(e) {
+            const fileName = e.target.files[0]?.name || 'No file chosen';
+            document.querySelector('.file-info').textContent = fileName;
+        });
 
         // Add drag and drop event handlers
         const dragDrop = document.getElementById('dragDrop');
@@ -1197,7 +1214,8 @@
 
         function confirmDelete() {
             if (courseToDeleteId) {
-                courses = courses.filter(course => course.id !== courseToDeleteId);
+                auth.deleteCourse(courseToDeleteId);
+                courses = auth.getUserCourses();
                 updateDisplay();
                 courseToDeleteId = null;
             }

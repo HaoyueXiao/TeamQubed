@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q³ - Settings</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            overflow-x: hidden;
+        }
+
+        .sidebar {
+            width: 70px;
+            background: #1e1e1e;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            display: flex;
+            flex-direction: column;
+            transition: width 0.3s ease;
+            z-index: 1000;
+        }
+
+        .sidebar:hover {
+            width: 240px;
+        }
+
+        /* User Profile Section */
+        .user-profile {
+            height: 80px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0 23px;
+            margin-bottom: 20px;
+        }
+
+        .user-icon {
+            width: 24px;
+            height: 24px;
+            min-width: 24px;
+            background: #6200ee;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: white;
+            transition: all 0.2s ease;
+        }
+
+        .sidebar:hover .user-icon {
+            width: 40px;
+            height: 40px;
+            min-width: 40px;
+            font-size: 16px;
+        }
+
+        .user-name {
+            margin-left: 32px;
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.7);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .sidebar:hover .user-name {
+            opacity: 1;
+        }
+
+        /* Navigation Section */
+        .nav-items {
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            gap: 32px;
+            margin-top: 20px;
+        }
+
+        .nav-item {
+            height: 24px;
+            display: flex;
+            align-items: center;
+            padding: 0 23px;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .nav-item:hover {
+            color: white;
+        }
+
+        .nav-item i {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .material-icons-round {
+            font-size: 24px;
+            color: rgba(255, 255, 255, 0.7);
+            transition: color 0.2s ease;
+        }
+
+        .nav-item:hover .material-icons-round {
+            color: white;
+        }
+
+        .nav-item span {
+            margin-left: 32px;
+            font-size: 16px;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .sidebar:hover .nav-item span {
+            opacity: 1;
+        }
+
+        /* Logo Section */
+        .logo-container {
+            margin-top: auto;
+            height: 80px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0 23px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.2s ease;
+            letter-spacing: -1px;
+        }
+
+        .logo:hover {
+            color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 70px;
+            flex-grow: 1;
+            padding: 24px 32px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: margin-left 0.3s ease;
+            width: calc(100% - 70px);
+
+        }
+
+        .sidebar:hover ~ .main-content {
+            margin-left: 240px;
+            width: calc(100% - 240px);
+        }
+
+        .page-title {
+            position: fixed;
+            top: 24px;
+            left: 94px;
+            font-size: 20px;
+            font-weight: 500;
+            transition: left 0.3s ease;
+            color: #333;
+        }
+
+        .sidebar:hover ~ .page-title {
+            left: 264px;
+        }
+
+
+        .delete-warning {
+            background: rgba(255, 68, 68, 0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 32px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .delete-warning i {
+            color: #ff4444;
+            font-size: 24px !important;
+        }
+
+        .delete-warning-text {
+            color: #d14343;
+            font-size: 14px;
+            text-align: left;
+            line-height: 1.5;
+        }
+
+
+        .settings-form-container {
+            background: #fff;
+            padding: 32px;
+ 
+            max-width: 500px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+            display: flex;
+            flex-direction: column;
+   
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: flex-end;
+            width: 100%;
+        }
+        .settings-form .form-group {
+            margin-bottom: 24px;
+        }
+
+        .settings-form label {
+            display: block;
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .settings-form input[type="text"],
+        .settings-form input[type="password"],
+        .settings-form input[type="email"] {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 20px;
+        }
+
+        .save-button {
+            background-color: #6200ee;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .save-button:hover {
+            background-color: #4e00c1;
+        }
+
+        .page-title {
+            position: fixed;
+            top: 24px;
+            left: 94px;
+            font-size: 20px;
+            font-weight: 500;
+            transition: left 0.3s ease;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="user-profile">
+            <div class="user-icon">P</div>
+            <span class="user-name">Professor Sam</span>
+        </div>
+        <nav class="nav-items">
+            <a href="home.html" class="nav-item">
+                <i class="material-icons-round">home</i>
+                <span>Home</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="material-icons-round">search</i>
+                <span>Search</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="material-icons-round">email</i>
+                <span>Email</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="material-icons-round">folder</i>
+                <span>Your Files</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="material-icons-round">settings</i>
+                <span>Settings</span>
+            </a>
+        </nav>
+        <div class="logo-container">
+            <a href="#" class="logo">Q³</a>
+        </div>
+    </div>
+
+    <div class="page-title">Settings</div>
+
+    <div class="main-content">
+        <div class="settings-form-container">
+            <form onsubmit="handleSettingsSave(event)" class="settings-form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" placeholder="Enter your username" required>
+                </div>
+    
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter a new password" required>
+                </div>
+    
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="Enter your email address" required>
+                </div>
+                <div class="button-container">
+
+                    <button type="submit" class="save-button">Save Settings</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function handleSettingsSave(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const email = document.getElementById('email').value;
+
+            alert("Your settings have been saved!");
+
+            form.reset();
+        }
+
+    </script>
+</body>
+</html>

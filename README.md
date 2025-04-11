@@ -1,7 +1,5 @@
 # Q³ - Qubed Project
 
-![Q³ Logo](https://placeholder-for-logo.com/200x80)
-
 Q³ is a streamlined learning management system (LMS) designed for educators to manage courses, track student progress, and analyze performance data. The application provides an intuitive interface for professors to organize their course materials, monitor student grades, and generate insights about class performance.
 
 ## Features

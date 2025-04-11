@@ -11,9 +11,9 @@ if (!localStorage.getItem('q3_current_user')) {
 
 const auth = {
     // Register a new user
-    register: function(name, email, password) {
+    register: function(firstName, lastName, email, password) {
         try {
-            if (!name || !email || !password) {
+            if (!firstName || !lastName || !email || !password) {
                 throw new Error('All fields are required');
             }
             
@@ -26,7 +26,9 @@ const auth = {
 
             const newUser = {
                 id: Date.now(),
-                name,
+                firstName,
+                lastName,
+                name: firstName + ' ' + lastName, // Keep for backward compatibility
                 email,
                 password, // Note: In production, this should be hashed
                 courses: [],
@@ -60,6 +62,8 @@ const auth = {
             localStorage.setItem('q3_current_user', JSON.stringify({
                 id: user.id,
                 name: user.name,
+                firstName: user.firstName || '',
+                lastName: user.lastName || '',
                 email: user.email
             }));
 

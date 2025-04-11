@@ -167,8 +167,13 @@
 
         <form id="registerForm" onsubmit="handleRegister(event)">
             <div class="form-field">
-                <label for="registerName">Full Name</label>
-                <input type="text" id="registerName" required placeholder="Enter your full name">
+                <label for="registerFirstName">First Name</label>
+                <input type="text" id="registerFirstName" required placeholder="Enter your first name">
+            </div>
+
+            <div class="form-field">
+                <label for="registerLastName">Last Name</label>
+                <input type="text" id="registerLastName" required placeholder="Enter your last name">
             </div>
 
             <div class="form-field">
@@ -179,6 +184,11 @@
             <div class="form-field">
                 <label for="registerPassword">Password</label>
                 <input type="password" id="registerPassword" required placeholder="Choose a password">
+            </div>
+
+            <div class="form-field">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" required placeholder="Confirm your password">
             </div>
 
             <button type="submit" class="login-button">Create Account</button>
@@ -231,13 +241,18 @@
 
         function handleRegister(event) {
             event.preventDefault();
-            const name = document.getElementById('registerName').value;
+            const firstName = document.getElementById('registerFirstName').value;
+            const lastName = document.getElementById('registerLastName').value;
             const email = document.getElementById('registerEmail').value;
             const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
             const errorDiv = document.getElementById('registerError');
             
             try {
-                auth.register(name, email, password);
+                if (password !== confirmPassword) {
+                    throw new Error("Passwords do not match");
+                }
+                auth.register(firstName, lastName, email, password);
                 auth.login(email, password);
                 window.location.href = 'home.html';
             } catch (error) {

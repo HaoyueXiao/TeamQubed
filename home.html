@@ -781,17 +781,17 @@
             <span class="user-name">Professor Sam</span>
         </div>
         <nav class="nav-items">
-            <a href="home.html" class="nav-item">
+            <a href="home.html" class="nav-item active">
                 <i class="material-icons-round">home</i>
                 <span>Home</span>
             </a>
-            <a href="#" class="nav-item">
+            <a href="settings.html" class="nav-item">
                 <i class="material-icons-round">settings</i>
                 <span>Settings</span>
             </a>
             <a href="#" class="nav-item" onclick="handleLogout()">
                 <i class="material-icons-round">logout</i>
-                <span>Log out</span>
+                <span>Logout</span>
             </a>
         </nav>
         <div class="logo-container">
@@ -893,7 +893,7 @@
         // Update user name in sidebar
         const currentUser = auth.getCurrentUser();
         document.querySelector('.user-name').textContent = currentUser.name;
-        document.querySelector('.user-icon').textContent = currentUser.name.charAt(0);
+        document.querySelector('.user-icon').textContent = currentUser.firstName ? currentUser.firstName.charAt(0) : currentUser.name.charAt(0);
 
         let courses = auth.getUserCourses();
         let courseToDeleteId = null;

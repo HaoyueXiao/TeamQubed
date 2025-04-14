@@ -470,59 +470,76 @@
             transform: rotate(-45deg);
         }
 
-        /* Message Bubbles */
+        /* 修改消息气泡容器 */
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            margin: 48px 0;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* 修改消息气泡样式 */
         .message-bubble {
-            position: absolute;
+            position: relative; /* 改为相对定位，不再是绝对定位 */
             background: rgba(30, 30, 30, 0.9);
             border-radius: 16px;
             padding: 20px 24px;
             color: white;
-            max-width: 600px;
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
-            z-index: 100;
+            max-width: 80%;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 24px; /* 添加底部间距 */
         }
 
+        /* 用户消息靠右 */
         .message-bubble.user {
             font-size: 16px;
             font-style: italic;
             opacity: 0.9;
+            margin-left: auto; /* 右对齐 */
+            background: #7000FF; /* 用户消息使用紫色背景 */
         }
 
+        /* AI消息靠左 */
         .message-bubble.ai {
-            margin-top: 16px;
+            margin-right: auto; /* 左对齐 */
             line-height: 1.5;
+            background: rgba(30, 30, 30, 0.9);
         }
 
-        .message-bubble.ai h3 {
-            font-size: 16px;
-            font-weight: 500;
-            margin-bottom: 16px;
-            opacity: 0.9;
+        /* 添加箭头指示器 */
+        .message-bubble.user:after {
+            content: '';
+            position: absolute;
+            right: 15px;
+            bottom: -10px;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid #7000FF;
         }
 
-        .message-bubble.ai ul {
-            margin: 16px 0;
-            padding-left: 20px;
+        .message-bubble.ai:after {
+            content: '';
+            position: absolute;
+            left: 15px;
+            bottom: -10px;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid rgba(30, 30, 30, 0.9);
         }
 
-        .message-bubble.ai li {
-            margin-bottom: 12px;
-        }
-
-        .message-bubble.ai .section-title {
-            font-weight: 500;
-            margin: 20px 0 12px;
-            opacity: 0.9;
-        }
-
-        .message-bubble.ai .suggestion {
-            padding-left: 20px;
-            margin-bottom: 8px;
-        }
-
-        .message-bubble.ai .question {
-            margin-top: 20px;
-            opacity: 0.9;
+        /* 聊天区域背景 */
+        .chat-area {
+            background: #f5f5f5;
+            border-radius: 16px;
+            padding: 24px;
+            margin: 32px 0;
         }
 
         /* Chat Input */
@@ -579,6 +596,110 @@
             color: white;
             opacity: 0.7;
         }
+
+
+        .matrix-container {
+            margin: 48px 0;
+            padding: 32px;
+            background: #f8f9fa;
+            border-radius: 16px;
+        }
+        
+        .matrix-title {
+            font-size: 18px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 24px;
+        }
+        
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        
+        .matrix-table th {
+            background: #1e1e1e;
+            color: white;
+            padding: 12px 16px;
+            font-weight: 500;
+            text-align: left;
+        }
+        
+        .matrix-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #eee;
+            color: #333;
+        }
+        
+        .matrix-table tr:nth-child(even) {
+            background-color: #f5f5f5;
+        }
+        
+        .matrix-table tr:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .score-high {
+            color: #4caf50;
+            font-weight: 500;
+        }
+        
+        .score-medium {
+            color: #ff9800;
+        }
+        
+        .score-low {
+            color: #f44336;
+            font-weight: 500;
+        }
+        
+        .matrix-filters {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .matrix-filter {
+            padding: 8px 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: white;
+            font-size: 14px;
+            color: #333;
+            cursor: pointer;
+        }
+        
+        .matrix-filter.active {
+            background: #7000FF;
+            color: white;
+            border-color: #7000FF;
+        }
+        
+        .matrix-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 16px;
+        }
+        
+        .matrix-action {
+            padding: 8px 16px;
+            background: #1e1e1e;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .matrix-action i {
+            font-size: 18px;
+        }
+
+
     </style>
 </head>
 <body>
@@ -587,6 +708,9 @@
             <div class="user-icon">P</div>
             <div class="user-name">Professor Sam</div>
         </div>
+
+
+
         <nav class="nav-items">
             <a href="home.html" class="nav-item">
                 <i class="material-icons-round">home</i>
@@ -606,6 +730,8 @@
         </div>
     </div>
 
+
+
     <div class="main-content">
         <div class="page-title">
             Course Diagnostic
@@ -614,7 +740,11 @@
             </button>
         </div>
 
+
         <div id="courseData">
+            
+            <div class="matrix-title">Student Performance Matrix</div>
+            
             <div class="grade-chart">
                 <div class="grade-chart-title">Course Average Grade</div>
                 <div class="grade-chart-content">
@@ -631,6 +761,39 @@
                     </div>
                 </div>
             </div>
+
+
+            
+            <div class="matrix-filters">
+                <button class="matrix-filter active">All Topics</button>
+                <button class="matrix-filter">Data Structures</button>
+                <button class="matrix-filter">Algorithms</button>
+                <button class="matrix-filter">Programming</button>
+            </div>
+
+            <table class="matrix-table">
+                <thead>
+                    <tr>
+                        <th>Student</th>
+                        <th>Assignment 1</th>
+                        <th>Assignment 2</th>
+                        <th>Assignment 3</th>
+                        <th>Assignment 4</th>
+                        <th>Overall</th>
+                    </tr>
+                </thead>
+                <tbody id="matrixBody">
+                    <!-- 表格内容将通过JavaScript动态生成 -->
+                </tbody>
+            </table>            
+            
+            <div class="matrix-actions">
+                <button class="matrix-action">
+                    <i class="material-icons-round">download</i>
+                    Export
+                </button>
+            </div>
+            
 
             <div class="progress-section">
                 <div class="progress-card">
@@ -680,25 +843,30 @@
                 </div>
             </div>
 
-            <div class="message-bubble user">
-                Can you identify the recurring mistakes my students are making in the latest assignment on data structures?
-            </div>
+            <!-- 在courseData div中替换原有的message-bubble部分 -->
+            <div class="chat-area">
+                <div class="chat-container">
+                    <div class="message-bubble user">
+                        Can you identify the recurring mistakes my students are making in the latest assignment on data structures?
+                    </div>
+                    
+                    <div class="message-bubble ai">
+                        <h3>Absolutely, Professor. Here's a summary of the recurring mistakes from the latest assignment:</h3>
+                        
+                        <ol>
+                            <li>Linked Lists: Many students seem to struggle with implementing insert and delete operations correctly. They often confuse the head and tail pointers, resulting in errors during execution.</li>
+                            <li>Binary Trees: There is a common error in the tree traversal functions; specifically, some students are not correctly implementing the in-order traversal, leading to incomplete output.</li>
+                            <li>Array Manipulations: I've noticed that errors frequently occur in boundary checks within loop constructs, which causes out-of-bound errors.</li>
+                        </ol>
 
-            <div class="message-bubble ai">
-                <h3>Absolutely, Professor. Here's a summary of the recurring mistakes from the latest assignment:</h3>
-                
-                <ol>
-                    <li>Linked Lists: Many students seem to struggle with implementing insert and delete operations correctly. They often confuse the head and tail pointers, resulting in errors during execution.</li>
-                    <li>Binary Trees: There is a common error in the tree traversal functions; specifically, some students are not correctly implementing the in-order traversal, leading to incomplete output.</li>
-                    <li>Array Manipulations: I've noticed that errors frequently occur in boundary checks within loop constructs, which causes out-of-bound errors.</li>
-                </ol>
+                        <div class="section-title">Suggested Review Topics:</div>
+                        <div class="suggestion">• For linked lists, I recommend a review session focusing on pointer manipulation and common operations like insertions and deletions.</div>
+                        <div class="suggestion">• A hands-on lab session could help with binary trees, where students can practice different traversal methods and discuss their implementations.</div>
+                        <div class="suggestion">• A quick quiz on array boundaries and common pitfalls might reinforce the concepts necessary to handle arrays more effectively.</div>
 
-                <div class="section-title">Suggested Review Topics:</div>
-                <div class="suggestion">• For linked lists, I recommend a review session focusing on pointer manipulation and common operations like insertions and deletions.</div>
-                <div class="suggestion">• A hands-on lab session could help with binary trees, where students can practice different traversal methods and discuss their implementations.</div>
-                <div class="suggestion">• A quick quiz on array boundaries and common pitfalls might reinforce the concepts necessary to handle arrays more effectively.</div>
-
-                <div class="question">Would you like to schedule these review sessions, or do you need detailed examples and additional resources to prepare for the classes?</div>
+                        <div class="question">Would you like to schedule these review sessions, or do you need detailed examples and additional resources to prepare for the classes?</div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -809,6 +977,177 @@
                 sendMessage();
             }
         });
+
+                
+        
+        
+        
+        function displayMatrix() {
+            // 定义本地备份数据
+            const backupData = [
+                {
+                    name: "张三",
+                    assignments: [85, 92, 78, 89],
+                    overall: 86
+                },
+                {
+                    name: "李四",
+                    assignments: [76, 68, 72, 70],
+                    overall: 71
+                },
+                {
+                    name: "王五",
+                    assignments: [95, 97, 91, 93],
+                    overall: 94
+                },
+                {
+                    name: "赵六",
+                    assignments: [82, 79, 85, 88],
+                    overall: 83
+                },
+                {
+                    name: "钱七",
+                    assignments: [65, 72, 68, 70],
+                    overall: 69
+                }
+            ];
+            
+            const sheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTmOeHJufgEKphazvGhw77xmkYZUMuSKgyy-cExSAFYTqW_i2Ukzil_V8ejOZedxm8oerCxlqbmc5wV/pub?output=csv';
+            
+            fetch(sheetURL)
+                .then(response => response.text())
+                .then(data => {
+                    // 解析CSV数据
+                    const rows = data.split('\n');
+                    const headers = rows[0].split(',');
+                    
+                    // 获取学生数据
+                    const studentData = [];
+                    
+                    for (let i = 1; i < rows.length; i++) {
+                        if (!rows[i]) continue; // 跳过空行
+                        
+                        const values = rows[i].split(',');
+                        const student = {
+                            name: values[0],
+                            assignments: values.slice(1, 5).map(Number),
+                            overall: parseFloat(values[5])
+                        };
+                        
+                        studentData.push(student);
+                    }
+                    
+                    // 显示数据到表格中
+                    renderMatrix(studentData);
+                })
+                .catch(error => {
+                    console.error('Error fetching data from Google Sheets:', error);
+                    // 使用备份数据
+                    renderMatrix(backupData);
+                });
+            
+            // 强制显示课程数据区域并隐藏空状态提示
+            document.getElementById('emptyState').style.display = 'none';
+            document.getElementById('courseData').style.display = 'block';
+        }
+
+        // 将渲染表格的代码提取为一个单独的函数
+        function renderMatrix(studentData) {
+            const matrixBody = document.getElementById('matrixBody');
+            matrixBody.innerHTML = '';
+            
+            studentData.forEach(student => {
+                const row = document.createElement('tr');
+                
+                // 添加学生姓名
+                const nameCell = document.createElement('td');
+                nameCell.textContent = student.name;
+                row.appendChild(nameCell);
+                
+                // 添加各个作业成绩
+                student.assignments.forEach(score => {
+                    const cell = document.createElement('td');
+                    cell.textContent = score;
+                    
+                    // 根据分数添加相应的样式
+                    if (score >= 90) {
+                        cell.className = 'score-high';
+                    } else if (score >= 75) {
+                        cell.className = 'score-medium';
+                    } else {
+                        cell.className = 'score-low';
+                    }
+                    
+                    row.appendChild(cell);
+                });
+                
+                // 添加总体成绩
+                const overallCell = document.createElement('td');
+                overallCell.textContent = student.overall;
+                
+                if (student.overall >= 90) {
+                    overallCell.className = 'score-high';
+                } else if (student.overall >= 75) {
+                    overallCell.className = 'score-medium';
+                } else {
+                    overallCell.className = 'score-low';
+                }
+                
+                row.appendChild(overallCell);
+                
+                matrixBody.appendChild(row);
+            });
+        }
+
+
+
+        // 添加筛选功能
+        const filters = document.querySelectorAll('.matrix-filter');
+        filters.forEach(filter => {
+            filter.addEventListener('click', function() {
+                filters.forEach(f => f.classList.remove('active'));
+                this.classList.add('active');
+                
+                // 在真实应用中，这里应该根据所选筛选器重新获取和显示数据
+                displayMatrix();
+            });
+        });
+
+        // 初始化矩阵显示
+        document.addEventListener('DOMContentLoaded', function() {
+            // 在页面加载完成后调用显示矩阵的函数
+            displayMatrix();        
+        
+            // 添加下载功能
+            const exportButton = document.querySelector('.matrix-action');
+            if (exportButton) {
+                exportButton.addEventListener('click', function() {
+                    // 创建一个CSV下载
+                    let csv = 'Student,Assignment 1,Assignment 2,Assignment 3,Assignment 4,Overall\n';
+                    
+                    const rows = document.querySelectorAll('#matrixBody tr');
+                    rows.forEach(row => {
+                        const cells = row.querySelectorAll('td');
+                        const rowData = Array.from(cells).map(cell => cell.textContent);
+                        csv += rowData.join(',') + '\n';
+                    });
+                    
+                    // 创建下载链接
+                    const blob = new Blob([csv], { type: 'text/csv' });
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.setAttribute('hidden', '');
+                    a.setAttribute('href', url);
+                    a.setAttribute('download', 'student_performance.csv');
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                });
+            }
+    });
+
+        
+
     </script>
 </body>
 </html> 

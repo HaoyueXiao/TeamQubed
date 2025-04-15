@@ -846,7 +846,11 @@
             <!-- 在courseData div中替换原有的message-bubble部分 -->
             <div class="chat-area">
                 <div class="chat-container">
-                    <div class="message-bubble user">
+                    
+                    <!-- 聊天内容将在这里动态生成 -->
+
+
+                    <!-- <div class="message-bubble user">
                         Can you identify the recurring mistakes my students are making in the latest assignment on data structures?
                     </div>
                     
@@ -864,7 +868,7 @@
                         <div class="suggestion">• A hands-on lab session could help with binary trees, where students can practice different traversal methods and discuss their implementations.</div>
                         <div class="suggestion">• A quick quiz on array boundaries and common pitfalls might reinforce the concepts necessary to handle arrays more effectively.</div>
 
-                        <div class="question">Would you like to schedule these review sessions, or do you need detailed examples and additional resources to prepare for the classes?</div>
+                        <div class="question">Would you like to schedule these review sessions, or do you need detailed examples and additional resources to prepare for the classes?</div> -->
                     </div>
                 </div>
             </div>
@@ -936,8 +940,12 @@
             
             // Add to main content
             const courseData = document.getElementById('courseData');
-            courseData.appendChild(userBubble);
             
+            // courseData.appendChild(userBubble);
+            
+            const chatContainer = document.querySelector('.chat-container');
+            chatContainer.appendChild(userBubble);
+
             // Clear input
             input.value = '';
             
@@ -967,7 +975,7 @@
                     aiBubble.innerHTML = "I see that this course doesn't have any data yet. Would you like help setting up your course? I can guide you through adding students and creating assignments.";
                 }
                 
-                courseData.appendChild(aiBubble);
+                chatContainer.appendChild(aiBubble);
             }, 1000);
         }
 

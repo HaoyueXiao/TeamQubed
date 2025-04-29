@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+<!-- {% block title %}Feedback for Students in {{ course.name }}{% endblock %} -->
+
+{% block content %}
+<main style="padding: 20px;">
+
+    <h2>Feedback for Students in {{ course.name }}</h2>
+
+    <!-- Search Bar -->
+    <input 
+        type="text" 
+        id="studentSearch" 
+        onkeyup="filterStudents()" 
+        placeholder="Search by Last Name..."
+        style="padding: 10px; width: 300px; margin-bottom: 20px; border-radius: 5px; border: 1px solid #ccc;"
+    >
+
+    <!-- Students and Feedback Table -->
+    <table id="studentsTable" style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr style="background-color: #f2f2f2;">
+                <th style="padding: 10px; border: 1px solid #ccc;">Student Name</th>
+                <th style="padding: 10px; border: 1px solid #ccc;">Feedback</th>
+                <th style="padding: 10px; border: 1px solid #ccc;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+            <tr class="student-row" data-lastname="{{ student.l_name|lower }}">
+                <td style="padding: 10px; border: 1px solid #ccc;">{{ student.f_name }} {{ student.l_name }}</td>
+                <td style="padding: 10px; border: 1px solid #ccc;">
+                    {% with feedback=student.feedbacks.first %}
+                        {% if feedback %}
+                            {{ feedback.feedback }}
+                        {% else %}
+                            <em>No feedback yet</em>
+                        {% endif %}
+                    {% endwith %}
+                </td>
+                <td style="padding: 10px; border: 1px solid #ccc;">
+                    <a href="{% url 'feedback:feedback_students_view' course.course_id student.student_id %}">
+                        <button>View / Add Feedback</button>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</main>
+
+<!-- JavaScript for live search -->
+<script>
+function filterStudents() {
+    let input = document.getElementById('studentSearch').value.toLowerCase();
+    let rows = document.getElementsByClassName('student-row');
+    for (let i = 0; i < rows.length; i++) {
+        let lastName = rows[i].getAttribute('data-lastname');
+        if (lastName.includes(input)) {
+            rows[i].style.display = "";
+        } else {
+            rows[i].style.display = "none";
+        }
+    }
+}
+</script>
+{% endblock %}

@@ -1,0 +1,18 @@
+# ✅ SYSTEM SETUP (only once)
+brew install python@3.13
+brew install mysql
+
+# ✅ PROJECT SETUP
+cd /path/to/your/project  # Make sure this has manage.py
+pipenv shell               # Create and enter virtual environment
+
+# ✅ INSTALL DEPENDENCIES
+pipenv install django
+pipenv install mysqlclient
+pipenv install djangorestframework
+pipenv install mysql-connector-python
+
+# ✅ RUN DJANGO PROJECT
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver

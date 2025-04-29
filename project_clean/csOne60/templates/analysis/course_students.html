@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}Students{% endblock %}
+
+{% block content %}
+<main class="course-students-page">
+
+    <h2 class="page-title">Students in {{ course.name }}</h2>
+
+    <!-- Search Bar -->
+    <div class="search-container">
+        <input 
+            type="text" 
+            id="studentSearch" 
+            onkeyup="filterStudents()" 
+            placeholder="Search by Last Name..."
+            class="search-input"
+        >
+    </div>
+
+    <!-- Students Grid -->
+    <div id="studentsContainer" class="students-grid">
+        {% for student in students %}
+            <div class="student-card" data-lastname="{{ student.l_name|lower }}">
+                <h3 class="student-name">{{ student.f_name }} {{ student.l_name }}</h3>
+                <p class="student-email">{{ student.email }}</p>
+                <div class="student-actions">
+                    <a href="{% url 'student_slo_analysis' course.course_id student.student_id %}" class="view-button">
+                        View SLO Mastery
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Bottom Buttons -->
+    <div class="button-group">
+        <a href="{% url 'upload_students' course.course_id %}" class="upload-button">Upload More Students</a>
+        <a href="{% url 'index' %}" class="back-button">Back to Courses</a>
+    </div>
+
+</main>
+
+<!-- JS: Live Search -->
+<script>
+function filterStudents() {
+    let input = document.getElementById('studentSearch').value.toLowerCase();
+    let cards = document.getElementsByClassName('student-card');
+
+    for (let card of cards) {
+        let lastName = card.getAttribute('data-lastname');
+        card.style.display = lastName.includes(input) ? "block" : "none";
+    }
+}
+</script>
+{% endblock %}

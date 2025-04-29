@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block page_heading %}Home{% endblock %}
+
+{% block content %}
+<main class="main-content">
+  <div class="courses-section">
+    <h2 class="section-title">Your Courses</h2>
+    <div class="courses-grid">
+
+      <!-- ➕ Add Course Tile -->
+      <div class="course-card">
+        <a href="{% url 'course:add_course' %}" class="add-course-button">
+          ➕
+        </a>
+      </div>
+
+      <!-- Regular Course Tiles -->
+      {% for course in courses %}
+      <div class="course-card">
+        <div class="course-title">{{ course.name }}</div>
+        <div class="course-buttons">
+          <a href="{% url 'upload_students' course.course_id %}" class="btn-small">Upload Students</a>
+          <a href="{% url 'class_slo_analysis' course.course_id %}" class="btn-small">SLO Report</a>
+          <a href="{% url 'course_students' course.course_id %}" class="btn-small">View Students</a>
+          <a href="{% url 'feedback:feedback_search' course.course_id %}" class="btn-small">View Feedback</a>
+        </div>
+      </div>
+      {% endfor %}
+
+    </div>
+  </div>
+</main>
+
+{% endblock %}

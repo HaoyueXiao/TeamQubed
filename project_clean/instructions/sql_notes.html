@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>How to Create a Stored Procedure in MySQL</title>
+</head>
+<body>
+
+    <div style="padding: 20px; border: 2px solid #999; border-radius: 10px; background-color: #f9f9f9; font-family: Arial, sans-serif; line-height: 1.7;">
+
+        <h1>How to Create a Stored Procedure in MySQL</h1>
+      
+        <p><strong>Overview:</strong> A stored procedure is a saved block of SQL statements that can be reused multiple times. It is stored in the database and executed with a single call command.</p>
+      
+        <h3>Steps to Create a Stored Procedure</h3>
+        <ol>
+          <li>
+            <strong>Change the Delimiter:</strong>  
+            Before creating a procedure, set a different delimiter (such as <code>//</code>) because the procedure body will contain semicolons (<code>;</code>).
+            <pre>DELIMITER //</pre>
+          </li>
+          <li>
+            <strong>Define the Stored Procedure:</strong>  
+            Use the <code>CREATE PROCEDURE</code> statement followed by the procedure name, optional parameters, and SQL block inside <code>BEGIN</code> and <code>END</code>.
+            <pre>
+        CREATE PROCEDURE ProcedureName()
+        BEGIN
+            -- SQL statements go here
+        END //
+            </pre>
+          </li>
+          <li>
+            <strong>Reset the Delimiter:</strong>  
+            After the procedure is created, set the delimiter back to the default semicolon.
+            <pre>DELIMITER ;</pre>
+          </li>
+        </ol>
+      
+        <h3>Example</h3>
+        <p>Here’s how to create a procedure to select all clients from the <code>Clients</code> table:</p>
+        <pre>
+      DELIMITER //
+      
+      CREATE PROCEDURE GetAllClients()
+      BEGIN
+        SELECT * FROM Clients;
+      END //
+      
+      DELIMITER ;
+        </pre>
+      
+        <h3>Calling a Stored Procedure</h3>
+        <p>After creation, you can call the procedure like this:</p>
+        <pre>CALL GetAllClients();</pre>
+      
+        <h3>Tips</h3>
+        <ul>
+          <li>Always set and reset the delimiter properly.</li>
+          <li>Procedure names should be unique within the database.</li>
+          <li>Procedures can include multiple SQL statements, control logic, and variables.</li>
+        </ul>
+      
+        <h3>Summary</h3>
+        <ul>
+          <li><strong>DELIMITER //</strong></li>
+          <li><strong>CREATE PROCEDURE ... BEGIN ... END</strong></li>
+          <li><strong>DELIMITER ;</strong></li>
+          <li><strong>CALL ProcedureName();</strong></li>
+        </ul>
+      
+      </div>
+      
+
+
+    <div style="padding: 20px; border: 1px solid #ccc; border-radius: 10px; background-color: #f9f9f9; font-family: Arial, sans-serif; line-height: 1.6;">
+        <h2>Notes: Creating a Django Project and App (macOS)</h2>
+        <p><em>Important: On macOS, all libraries (including Django) must be installed inside the virtual environment (venv). Nothing is installed globally on the system.</em></p>
+      
+        <ol>
+          <li><strong>Install Python</strong>
+            <ul>
+              <li>Ensure Python 3 is installed: <code>python3 --version</code></li>
+              <li>If not installed, use Homebrew: <code>brew install python</code></li>
+            </ul>
+          </li>
+      
+          <li><strong>Create and Activate Virtual Environment</strong>
+            <ul>
+              <li>Create virtual environment: <code>python3 -m venv env</code></li>
+              <li>Activate environment: <code>source env/bin/activate</code></li>
+            </ul>
+          </li>
+      
+          <li><strong>Install Django Inside Virtual Environment</strong>
+            <ul>
+              <li>Once activated, install Django locally inside venv: <code>pip install django</code></li>
+            </ul>
+          </li>
+      
+          <li><strong>Create Django Project</strong>
+            <ul>
+              <li>Run: <code>django-admin startproject project_name</code></li>
+              <li>Navigate into project folder: <code>cd project_name</code></li>
+            </ul>
+          </li>
+      
+          <li><strong>Create Django App</strong>
+            <ul>
+              <li>Run inside project folder: <code>python manage.py startapp app_name</code></li>
+            </ul>
+          </li>
+      
+          <li><strong>Register App</strong>
+            <ul>
+              <li>Open <code>project_name/settings.py</code></li>
+              <li>Add your app to <code>INSTALLED_APPS</code> list: <br><code>'app_name',</code></li>
+            </ul>
+          </li>
+      
+          <li><strong>Run Development Server</strong>
+            <ul>
+              <li>Start server: <code>python manage.py runserver</code></li>
+              <li>Visit <a href="http://127.0.0.1:8000" target="_blank">http://127.0.0.1:8000</a> in your browser.</li>
+            </ul>
+          </li>
+        </ol>
+      </div>
+      
+  
+</body>
+</html>

@@ -1,0 +1,52 @@
+
+Student CSV Upload Documentation
+==================================
+
+File Format:
+------------
+- The file must be in CSV (Comma-Separated Values) format.
+- File extension must be .csv (e.g., students.csv).
+
+Required Columns:
+-----------------
+| Column Name | Description               | Example                    |
+|-------------|---------------------------|----------------------------|
+| f_name      | Student's first name      | John                       |
+| l_name      | Student's last name       | Doe                        |
+| email       | Student's email address   | john.doe@example.com       |
+
+- Column headers must be exactly: f_name, l_name, email (lowercase with underscores).
+
+Example CSV content:
+--------------------
+f_name,l_name,email
+John,Smith,john.smith@example.com
+Jane,Johnson,jane.johnson@example.com
+Alice,Williams,alice.williams@example.com
+Bob,Brown,bob.brown@example.com
+
+Notes:
+------
+- Each row represents one student.
+- Emails must be valid (example@example.com format).
+- No empty fields allowed.
+- No duplicate emails.
+- Save/export as .csv (not Excel .xlsx).
+
+Common Mistakes to Avoid:
+--------------------------
+| Mistake                  | Fix                        |
+|---------------------------|-----------------------------|
+| Capitalized column names  | Use lowercase: f_name       |
+| Missing columns           | Always have all three fields|
+| Extra spaces in headers   | Remove spaces               |
+| Wrong file type (.xlsx)   | Export as .csv              |
+
+Final Checklist Before Uploading:
+----------------------------------
+- [ ] File is .csv
+- [ ] Columns are f_name, l_name, email
+- [ ] No empty fields
+- [ ] No duplicate emails
+- [ ] Valid email formatting
+

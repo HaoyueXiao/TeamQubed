@@ -1,0 +1,104 @@
+.course-students-page {
+    padding: 40px;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.page-title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 30px;
+}
+
+.search-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.search-input {
+    padding: 10px 16px;
+    width: 60%;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+.students-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.student-card {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    width: 280px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease;
+}
+
+.student-card:hover {
+    transform: translateY(-3px);
+}
+
+.student-name {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.student-email {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 12px;
+}
+
+.student-actions .view-button {
+    display: inline-block;
+    padding: 8px 14px;
+    background: #0055aa;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.student-actions .view-button:hover {
+    background: #003f88;
+}
+
+.button-group {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.upload-button,
+.back-button {
+    padding: 10px 20px;
+    font-size: 14px;
+    border: none;
+    border-radius: 6px;
+    text-decoration: none;
+    color: white;
+}
+
+.upload-button {
+    background: #28a745;
+}
+
+.upload-button:hover {
+    background: #218838;
+}
+
+.back-button {
+    background: #6c757d;
+}
+
+.back-button:hover {
+    background: #5a6268;
+}

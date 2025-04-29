@@ -1,0 +1,103 @@
+.form-group {
+    margin-bottom: 5px;
+    padding: 5px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="file"] {
+    width: 100%;
+    padding: 5px 5px;
+    /* margin-top: 2px; */
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+.upload-section {
+    padding: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.page-title {
+    font-size: 32px;
+    margin-bottom: 40px;
+    font-weight: 700;
+    color: #2c3e50;
+}
+
+/* Wrapper for both methods */
+.methods-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+}
+
+/* Each method card */
+.method-card {
+    background: white;
+    padding: 30px 20px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    width: 450px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Title inside card */
+.method-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    font-weight: 600;
+    color: #34495e;
+}
+
+/* Forms */
+.upload-form, .single-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.form-group label {
+    margin-bottom: 8px;
+    font-weight: 500;
+    font-size: 15px;
+    color: #34495e;
+}
+
+.form-group input {
+    padding: 10px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+.btn-submit {
+    background-color: #3498db;
+    color: white;
+    padding: 12px 0;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-submit:hover {
+    background-color: #2c80b4;
+}

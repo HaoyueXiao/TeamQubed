@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+<!-- {% block title %}Create Feedback{% endblock %} -->
+
+{% block content %}
+<div class="main-content">
+  <h2>Add/Edit Feedback for {{ student.f_name }} {{ student.l_name }}</h2>
+
+  <form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="feedback">Feedback:</label><br>
+      <textarea id="feedback" name="feedback" rows="6" cols="60">{{ feedback_text }}</textarea>
+    </div>
+
+    <button type="submit" class="btn-small">Save Feedback</button>
+  </form>
+
+  <br>
+  <a href="{% url 'feedback:feedback_search' course.course_id %}" class="btn-small">Back to Students</a>
+</div>
+{% endblock %}

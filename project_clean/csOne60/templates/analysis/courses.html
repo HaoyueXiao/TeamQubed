@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}My Courses{% endblock %}
+
+{% block content %}
+<h1 class="page-title">My Courses</h1>
+
+<div id="coursesContainer">
+    {% for course in courses %}
+    <div class="course-section">
+        <div class="course-circle">
+            {{ course.name }}
+        </div>
+    
+        <!-- Inside for-loop, so course.course_id is valid -->
+        <div class="button-group">
+            <a href="{% url 'upload_students' course.course_id %}" class="action-button">Add Student</a>
+            <a href="{% url 'course_students' course.course_id %}" class="action-button">Search Student</a>
+        </div>
+    
+        <div class="button-group">
+            <a href="{% url 'class_slo_analysis' course.course_id %}" class="action-button">Report</a>
+            {% if course.exams.first %}
+                <a href="{% url 'generate_feedback' course.exams.first.exam_id %}" class="action-button">Feedback</a>
+            {% else %}
+                <div class="action-button no-exam">No Exam</div>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="button-group">
+    <a href="{% url 'index' %}">
+        <button class="back-button">Back to Home</button>
+    </a>
+</div>
+{% endblock %}

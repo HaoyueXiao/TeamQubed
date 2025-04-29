@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block page_heading %}Course SLO{% endblock %}
+{% block content %}
+
+<h2>SLO Mastery Analysis</h2>
+
+<canvas id="sloChart" width="800" height="400"></canvas>
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const sloLabels = JSON.parse('{{ slo_names_json|escapejs }}');
+  const sloData = JSON.parse('{{ slo_scores_json|escapejs }}');
+
+  const ctx = document.getElementById('sloChart').getContext('2d');
+  const sloChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: sloLabels,
+      datasets: [{
+        label: 'SLO Mastery (%)',
+        data: sloData,
+        backgroundColor: '#4CAF50'
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      scales: {
+        x: {
+          min: 0,
+          max: 100,
+          title: {
+            display: true,
+            text: 'Percentage'
+          }
+        }
+      },
+      plugins: {
+        legend: { display: false },
+        title: {
+          display: true,
+          text: 'Average SLO Mastery for Class'
+        }
+      }
+    }
+  });
+</script>
+
+<p><a href="{% url 'index' %}">Back to Courses</a></p>
+{% endblock %}

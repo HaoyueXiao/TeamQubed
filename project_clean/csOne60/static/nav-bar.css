@@ -1,0 +1,26 @@
+/* --------------------------
+    Navbar Styles
+--------------------------- */
+.navbar {
+    background-color: #0a192f;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.nav-container {
+    display: inline-block;
+}
+
+.nav-logo {
+    color: #ffffff;
+    font-size: 28px;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: background 0.3s;
+}
+
+.nav-logo:hover {
+    background-color: #112240;
+}

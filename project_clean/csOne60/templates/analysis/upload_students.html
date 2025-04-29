@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block page_heading %}Upload Students{% endblock %}
+
+{% block content %}
+<main class="upload-section">
+
+    <h2 class="page-title">Add Students to {{ course.name }}</h2>
+
+    <div class="methods-container">
+
+        <!-- Upload CSV Section -->
+        <div class="method-card">
+            <h3 class="method-title">Upload CSV</h3>
+            <form method="post" enctype="multipart/form-data" class="upload-form">
+                {% csrf_token %}
+                <input type="hidden" name="form_type" value="csv_upload">
+                
+                <div class="form-group">
+                    {{ form.csv_file.label_tag }}
+                    {{ form.csv_file }}
+                </div>
+            
+                <button type="submit" class="btn-submit">Upload CSV</button>
+            </form>
+        </div>
+
+        <!-- Add Single Student Section -->
+        <div class="method-card">
+            <h3 class="method-title">Add Single Student</h3>
+            <form method="post" action="{% url 'add_single_student' course.course_id %}" class="single-form">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="first_name">First Name</label>
+                    <input type="text" name="first_name" id="first_name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="last_name">Last Name</label>
+                    <input type="text" name="last_name" id="last_name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" required>
+                </div>
+
+                <button type="submit" class="btn-submit">Add Student</button>
+            </form>
+        </div>
+
+    </div>
+
+</main>
+{% endblock %}

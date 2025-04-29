@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Successfully Uploaded Scores for {{ exam.name }}</h2>
+<ul>
+  {% for record in records %}
+    <li>{{ record.student.f_name }} {{ record.student.l_name }} – Question {{ record.question.question_id }}: {{ record.score }}</li>
+  {% endfor %}
+</ul>
+<a href="{% url 'index' %}">Back to Home</a>
+{% endblock %}

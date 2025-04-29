@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}
+Grade Treemap
+{% endblock %}
+
+{% block content %}
+<h2 style="text-align: center; margin-top: 20px;">Grade Distribution Map</h2>
+
+<div class="treemap-container">
+    {% for student in student_boxes %}
+        <div class="treemap-box" 
+             title="{{ student.student_name }} - Score: {{ student.total_score }}" 
+             style="
+                left: {{ student.x }}%;
+                top: {{ student.y }}%;
+                width: {{ student.width }}%;
+                height: {{ student.height }}%;
+                background-color: {{ student.color }};
+            ">
+            <div class="treemap-label">
+                {{ student.grade }}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<!-- Tooltip div -->
+<div id="tooltip" style="position: absolute; display: none; background: black; color: white; padding: 6px; border-radius: 4px; font-size: 14px; pointer-events: none; z-index: 999;"></div>
+
+<!-- Style -->
+<style>
+.treemap-container {
+    position: relative;
+    width: 1000px;
+    height: 600px;
+    margin: 20px auto;
+    border: 2px solid black;
+    background-color: #f9f9f9;
+}
+
+.treemap-box {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border: 1px solid white;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.treemap-box:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+}
+
+.treemap-label {
+    font-weight: bold;
+    color: white;
+    font-size: 14px;
+    padding: 2px;
+    text-align: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+</style>
+
+<!-- JavaScript for Floating Tooltip -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tooltip = document.getElementById('tooltip');
+    const boxes = document.querySelectorAll('.treemap-box');
+
+    boxes.forEach(box => {
+        box.addEventListener('mousemove', function(e) {
+            tooltip.style.display = 'block';
+            tooltip.innerText = this.getAttribute('title');
+            tooltip.style.left = (e.pageX + 10) + 'px';
+            tooltip.style.top = (e.pageY + 10) + 'px';
+        });
+
+        box.addEventListener('mouseleave', function() {
+            tooltip.style.display = 'none';
+        });
+    });
+});
+</script>
+{% endblock %}

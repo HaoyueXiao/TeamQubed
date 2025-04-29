@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Feedback for {{ student.f_name }} {{ student.l_name }}{% endblock %}
+
+{% block content %}
+<main style="padding: 20px;">
+    <h2>Feedback for {{ student.f_name }} {{ student.l_name }}</h2>
+
+    <!-- New Feedback Button -->
+    <div style="margin-bottom: 20px;">
+        <a href="{% url 'feedback:create_feedback' course_id student.student_id %}">
+            <button style="padding: 10px 20px; font-size: 16px;">➕ Add New Feedback</button>
+        </a>
+    </div>
+
+    {% if feedbacks %}
+    <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr style="background-color: #f2f2f2;">
+                <th style="padding: 10px; border: 1px solid #ccc;">Feedback Text</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for fb in feedbacks %}
+            <tr>
+                <td style="padding: 10px; border: 1px solid #ccc;">{{ fb.feedback }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p>No feedback available for this student yet.</p>
+    {% endif %}
+
+    <p style="margin-top: 20px;">
+        <a href="{% url 'feedback:feedback_report' course_id %}">← Back to Student List</a>
+    </p>
+</main>
+{% endblock %}

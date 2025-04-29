@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 style="text-align: center;">Students Successfully Uploaded to {{ course.name }}</h2>
+
+<div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+
+    {% for student in students %}
+        <div style="border: 1px solid #ccc; border-radius: 10px; padding: 20px; width: 250px; box-shadow: 2px 2px 8px rgba(0,0,0,0.1);">
+            
+            <h3 style="text-align: center;">{{ student.f_name }} {{ student.l_name }}</h3>
+            <p style="text-align: center;">{{ student.email }}</p>
+
+            <div style="margin-top: 15px; text-align: center;">
+                <a href="{% url 'student_slo_analysis' course.course_id student.student_id %}">
+                    <button style="padding: 8px 16px; background-color: #007BFF; color: white; border: none; border-radius: 5px; margin-bottom: 5px;">
+                        View SLO Mastery
+                    </button>
+                </a>
+            </div>
+
+        </div>
+    {% endfor %}
+
+</div>
+
+<div style="text-align: center; margin-top: 30px;">
+    <a href="{% url 'upload_students' course.course_id %}" style="text-decoration: none;">
+        <button style="padding: 10px 20px; background-color: #28A745; color: white; border: none; border-radius: 5px;">
+            Upload More Students
+        </button>
+    </a>
+
+    <a href="{% url 'index' %}" style="margin-left: 15px; text-decoration: none;">
+        <button style="padding: 10px 20px; background-color: #6C757D; color: white; border: none; border-radius: 5px;">
+            Back to Courses
+        </button>
+    </a>
+</div>
+{% endblock %}

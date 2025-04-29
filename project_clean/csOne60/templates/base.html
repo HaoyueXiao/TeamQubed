@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}My Django Site{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'analysis/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'feedback/css/homepage.css' %}">
+    <link rel="stylesheet" href="{% static 'analysis/css/student-upload.css' %}">
+    <link rel="stylesheet" href="{% static 'analysis/css/student-view.css' %}">
+    <link rel="stylesheet" href="{% static 'nav-bar.css' %}">
+    <link rel="stylesheet" href="{% static 'feedback/css/feedback-report.css'  %}">
+    <link rel="stylesheet" href="{% static 'course/css/course.css'  %}">
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1; /* Takes up remaining space to push footer down */
+        }
+
+        .footer {
+            background-color: #f0f0f0;
+            text-align: center;
+            padding: 1rem;
+        }
+    </style>
+    
+</head>
+<body>
+    <!-- <header class="header">
+        <h2>{% block page_heading %}Homepage{% endblock %}</h2>
+    </header> -->
+
+    {% include 'partials/_nav.html' %}
+    
+    <main>
+        
+        {% if messages %}
+        <div class="messages">
+          {% for message in messages %}
+            <div class="alert alert-success">
+              {{ message }}
+            </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+
+    </main>
+
+    {% include 'partials/_footer.html' %}
+</body>
+</html>

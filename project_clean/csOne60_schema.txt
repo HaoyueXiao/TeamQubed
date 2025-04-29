@@ -1,0 +1,104 @@
+
+Django Models Schema Notes
+---------------------------
+
+Professor
+- Primary Key: professor_id (AutoField)
+- Fields:
+  - l_name (last name)
+  - f_name (first name)
+  - email (email address)
+- Relationships:
+  - Professor -> Course (related_name='courses')
+- String Display: "FirstName LastName"
+
+Course
+- Primary Key: course_id (AutoField)
+- Fields:
+  - name (course name)
+- Relationships:
+  - prof (ForeignKey to Professor)
+  - Course -> Exam (related_name='exams')
+  - Course -> Objective (related_name='objectives')
+  - Course -> Enroll (related_name='enrollments')
+  - Course -> Feedback (related_name='feedbacks')
+- String Display: Course name
+
+Exam
+- Primary Key: exam_id (AutoField)
+- Fields:
+  - name (exam name, default empty string)
+- Relationships:
+  - course (ForeignKey to Course)
+  - Exam -> Question (related_name='questions')
+  - Exam -> TestTaken (related_name='test_taken')
+- String Display: "ExamName (Course ID: course_id)"
+
+Objective
+- Primary Key: objective_id (AutoField)
+- Fields:
+  - name (objective name)
+  - outcome (learning outcome description)
+- Relationships:
+  - course (ForeignKey to Course)
+  - Objective -> Question (related_name='questions')
+- String Display: "ObjectiveName - CourseName"
+
+Question
+- Primary Key: question_id (AutoField)
+- Fields:
+  - question (text of the question)
+  - points (default 10.00)
+- Relationships:
+  - exam (ForeignKey to Exam)
+  - objective (ForeignKey to Objective)
+  - Question -> TestTaken (related_name='test_takens')
+- String Display: question text
+
+Student
+- Primary Key: student_id (AutoField)
+- Fields:
+  - l_name (last name)
+  - f_name (first name)
+  - email (email address)
+- Relationships:
+  - Student -> Enroll (related_name='enrollments')
+  - Student -> TestTaken (related_name='tests_taken')
+  - Student -> Feedback (related_name='feedbacks')
+- String Display: "FirstName LastName"
+
+Enroll
+- Primary Key: enroll_id (AutoField)
+- Fields:
+  - student (ForeignKey to Student)
+  - course (ForeignKey to Course)
+- String Display: "StudentName - CourseName"
+
+TestTaken
+- Fields:
+  - exam (ForeignKey to Exam)
+  - student (ForeignKey to Student)
+  - question (ForeignKey to Question)
+  - score (Decimal score)
+- String Display: "StudentName scored X on ExamName"
+
+Feedback
+- Primary Key: feedback_id (AutoField)
+- Fields:
+  - feedback (up to 2000 characters)
+- Relationships:
+  - student (ForeignKey to Student)
+  - prof (ForeignKey to Professor)
+  - course (ForeignKey to Course)
+- String Display: "Feedback by StudentName for ProfessorName in CourseName"
+
+Summary of Relationships
+- Professor -> Courses, Feedback
+- Course -> Professor, Exams, Objectives, Enrollments, Feedback
+- Exam -> Course, Questions, TestTaken
+- Objective -> Course, Questions
+- Question -> Exam, Objective, TestTaken
+- Student -> Enrollments, TestTaken, Feedback
+- Enroll -> Student + Course
+- TestTaken -> Student + Exam + Question
+- Feedback -> Student + Professor + Course

@@ -1,0 +1,78 @@
+-- Insert data into Professor table
+INSERT INTO professor (professor_id, l_name, f_name, email) VALUES
+(1, 'Doe', 'John', 'john.doe@example.com');
+
+-- Insert data into Course table
+INSERT INTO course (course_id, name, prof_id) VALUES
+(1, 'Introduction to Data Science', 1);
+
+-- Insert data into Objective table (3 SLOs for the course)
+INSERT INTO objective (objective_id, course_id, outcome) VALUES
+(1, 1, 'Understand the basics of data science'),
+(2, 1, 'Learn data visualization techniques'),
+(3, 1, 'Master machine learning concepts');
+
+-- Insert data into Question table (10 questions for each exam, each question tests one SLO)
+-- Exam 1
+INSERT INTO question (question_id, exam_id, objective_id, question) VALUES
+(1, 1, 1, 'What is data science?'),
+(2, 1, 1, 'Explain the concept of supervised learning.'),
+(3, 1, 1, 'What are the differences between regression and classification?'),
+(4, 1, 2, 'Explain what is meant by data visualization.'),
+(5, 1, 2, 'What are some common tools used in data visualization?'),
+(6, 1, 2, 'Describe how you would visualize a large dataset.'),
+(7, 1, 3, 'What is machine learning?'),
+(8, 1, 3, 'What is the difference between supervised and unsupervised learning?'),
+(9, 1, 3, 'How do decision trees work?'),
+(10, 1, 3, 'Explain the concept of overfitting in machine learning.');
+
+-- Exam 2
+INSERT INTO question (question_id, exam_id, objective_id, question) VALUES
+(11, 2, 1, 'What is a data pipeline?'),
+(12, 2, 1, 'Describe the steps in a typical data science project.'),
+(13, 2, 1, 'Explain feature engineering.'),
+(14, 2, 2, 'What is the importance of data cleaning in visualization?'),
+(15, 2, 2, 'What tools can be used for interactive data visualization?'),
+(16, 2, 2, 'What is the difference between univariate and multivariate analysis?'),
+(17, 2, 3, 'How does K-means clustering work?'),
+(18, 2, 3, 'What is the purpose of feature scaling in machine learning?'),
+(19, 2, 3, 'Explain the role of cross-validation in machine learning.'),
+(20, 2, 3, 'What are neural networks and how do they work?');
+
+-- Exam 3
+INSERT INTO question (question_id, exam_id, objective_id, question) VALUES
+(21, 3, 1, 'What is data normalization?'),
+(22, 3, 1, 'Explain the concept of exploratory data analysis (EDA).'),
+(23, 3, 1, 'What is the difference between structured and unstructured data?'),
+(24, 3, 2, 'What is a correlation matrix?'),
+(25, 3, 2, 'How would you visualize a correlation between two variables?'),
+(26, 3, 2, 'What is the importance of outlier detection in data visualization?'),
+(27, 3, 3, 'Explain how random forests work.'),
+(28, 3, 3, 'What is the bias-variance tradeoff?'),
+(29, 3, 3, 'Explain the difference between bagging and boosting.'),
+(30, 3, 3, 'What is the importance of model evaluation metrics?');
+
+-- Insert 50 students
+INSERT INTO student (student_id, l_name, f_name, email) VALUES
+(1, 'Smith', 'Alice', 'alice.smith@example.com'),
+(2, 'Johnson', 'Bob', 'bob.johnson@example.com'),
+(3, 'Williams', 'Charlie', 'charlie.williams@example.com'),
+-- (Insert 47 more students here with similar data)
+(50, 'Taylor', 'Zara', 'zara.taylor@example.com');
+
+-- Enroll all students into the course
+INSERT INTO enroll (enroll_id, student_id, course_id) VALUES
+(1, 1, 1),
+(2, 2, 1),
+(3, 3, 1),
+-- (Insert enrollments for all students up to 50)
+(50, 50, 1);
+
+-- Insert test_taken data for all students for all questions in all exams
+INSERT INTO test_taken (exam_id, student_id, question_id, score) VALUES
+(1, 1, 1, 9.0),
+(1, 1, 2, 8.5),
+(1, 1, 3, 7.0),
+-- (Insert more data for all students, exams, and questions with random scores)
+(3, 50, 29, 8.5),
+(3, 50, 30, 9.0);

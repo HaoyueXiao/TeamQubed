@@ -1,0 +1,2 @@
+$: mysql -u root -p 
+$: ***** (enter your root password set during mysql installation)

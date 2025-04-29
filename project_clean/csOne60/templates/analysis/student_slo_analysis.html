@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}SLO Mastery for {{ student.f_name }} {{ student.l_name }}{% endblock %}
+
+{% block content %}
+<main class="slo-analysis-page">
+
+    <h2 class="page-title">
+        SLO Mastery for {{ student.f_name }} {{ student.l_name }}
+    </h2>
+    <p class="subtitle">Course: {{ course.name }}</p>
+
+    <div class="chart-container" style="max-width: 900px; margin: 30px auto;">
+        <canvas id="sloChart" width="800" height="400"></canvas>
+    </div>
+
+    <div style="text-align: center; margin-top: 30px;">
+        <a href="{% url 'course_students' course.course_id %}" class="btn-back">
+            ← Back to Students
+        </a>
+    </div>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const sloLabels = JSON.parse('{{ slo_names_json|escapejs }}');
+  const sloData = JSON.parse('{{ slo_scores_json|escapejs }}');
+
+  const ctx = document.getElementById('sloChart').getContext('2d');
+  const sloChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: sloLabels,
+      datasets: [{
+        label: 'SLO Mastery (%)',
+        data: sloData,
+        backgroundColor: '#2196F3'
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      scales: {
+        x: {
+          min: 0,
+          max: 100,
+          title: { display: true, text: 'Percentage' }
+        }
+      },
+      plugins: {
+        legend: { display: false },
+        title: {
+          display: true,
+          text: 'Student-Level SLO Mastery'
+        }
+      }
+    }
+  });
+</script>
+{% endblock %}

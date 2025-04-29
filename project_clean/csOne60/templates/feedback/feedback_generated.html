@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+<!-- {% block title %}Create Feedback{% endblock %} -->
+{% block content %}
+<div class="main-content">
+  <h2>Add/Edit Feedback for {{ student.f_name }} {{ student.l_name }}</h2>
+  <p>Here you can build a form to submit feedback (later).</p>
+  <a href="{% url 'feedback:feedback_search' course.course_id %}" class="btn-small">Back to Students</a>
+</div>
+{% endblock %}

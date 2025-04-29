@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+<!-- {% block title %}Feedback for {{ course.name }}{% endblock %} -->
+{% block content %}
+<h2 class="page-title">Feedback Report: {{ course.name }}</h2>
+
+<table class="feedback-table">
+    <thead>
+        <tr>
+            <th>Student</th>
+            <th>Feedback</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for f in feedbacks %}
+        <tr>
+            <td>{{ f.student.f_name }} {{ f.student.l_name }}</td>
+            <td>{{ f.feedback }}</td>
+            <td>
+                <a href="{% url 'feedback:create_feedback' course.course_id f.student.student_id %}" class="btn-small">Add/Edit Feedback</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="3">No feedback submitted yet for this course.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

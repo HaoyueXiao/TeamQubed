@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Professor model
 class Professor(models.Model):
@@ -9,7 +10,7 @@ class Professor(models.Model):
 
     def __str__(self):
         return f"{self.f_name} {self.l_name}"
-
+    
 # Course model
 class Course(models.Model):
     course_id = models.AutoField(primary_key=True)
@@ -93,3 +94,5 @@ class Feedback(models.Model):
 
     def __str__(self):
         return f"Feedback by {self.student.f_name} {self.student.l_name} for {self.prof.f_name} {self.prof.l_name} in {self.course.name}"
+
+

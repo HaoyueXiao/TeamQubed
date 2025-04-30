@@ -20,12 +20,18 @@
     
         <div class="button-group">
             <a href="{% url 'class_slo_analysis' course.course_id %}" class="action-button">Report</a>
-            {% if course.exams.first %}
-                <a href="{% url 'generate_feedback' course.exams.first.exam_id %}" class="action-button">Feedback</a>
+        
+            {% if course.exams.all %}
+                {% for exam in course.exams.all %}
+                    <a href="{% url 'upload_test_scores' exam.exam_id %}" class="action-button">
+                        Upload Scores: {{ exam.name }}
+                    </a>
+                {% endfor %}
             {% else %}
-                <div class="action-button no-exam">No Exam</div>
+                <a href="#" class="action-button disabled">Upload Scores (no exam yet)</a>
             {% endif %}
         </div>
+         
     </div>
     {% endfor %}
 </div>

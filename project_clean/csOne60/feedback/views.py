@@ -57,4 +57,9 @@ def create_feedback(request, course_id, student_id):
     
 
 def generate_feedback_view(request, exam_id):
-    return render(request, 'feedback/feedback_generated.html')
+    exam = get_object_or_404(Exam, pk=exam_id)
+    course = exam.course  # assuming Exam has FK to Course
+    return render(request, 'feedback/feedback_generated.html', {
+        'exam': exam,
+        'course': course,
+    })

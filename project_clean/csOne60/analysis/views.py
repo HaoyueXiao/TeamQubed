@@ -71,11 +71,10 @@ def upload_students_to_course(request, course_id):
 
     return render(request, 'analysis/upload_students.html', {'form': form, 'course': course})
 
-
 def courses_view(request):
-    courses = Course.objects.all()
+    courses = Course.objects.prefetch_related('exams', 'objectives').all()
     return render(request, 'analysis/courses.html', {'courses': courses})
-    
+
 def course_students_view(request, course_id):
     course = get_object_or_404(Course, course_id=course_id)
     enrollments = Enroll.objects.filter(course=course)

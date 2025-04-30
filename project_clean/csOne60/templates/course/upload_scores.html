@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Upload Scores{% endblock %}
+{% block content %}
+
+<h2>Upload Scores for {{ exam.name }}</h2>
+
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <input type="file" name="scores_csv" required>
+  <button type="submit" class="btn">Upload</button>
+</form>
+
+<p><strong>Expected CSV format:</strong> student_id, question_id, score</p>
+
+{% endblock %}

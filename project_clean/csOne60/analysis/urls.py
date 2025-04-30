@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path,include
 from . import views
 
 urlpatterns = [
@@ -15,9 +15,10 @@ urlpatterns = [
     path('upload-students/<int:course_id>/', views.upload_students_to_course, name='upload_students'),
     path('treemap/<int:exam_id>/', views.grade_treemap, name='grade_treemap'),
     
-    path('courses/<int:course_id>/', views.course_page, name='course_page'),
+    
     
     path('add-single-student/<int:course_id>/', views.add_single_student, name='add_single_student'),
-
+    
+    path('courses/<int:course_id>/', views.course_page, name='course_page'),
 
 ]

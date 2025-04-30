@@ -9,11 +9,9 @@
     <h2 class="section-title">Your Courses</h2>
     <div class="courses-grid">
 
-      <!-- ➕ Add Course Tile -->
+      <!--  Add Course Tile -->
       <div class="course-card">
-        <a href="{% url 'course:add_course' %}" class="add-course-button">
-          ➕
-        </a>
+        <a href="{% url 'course:add_course_csv' %}" class="btn">+ Add Course</a>
       </div>
 
       <!-- Regular Course Tiles -->
@@ -25,6 +23,16 @@
           <a href="{% url 'class_slo_analysis' course.course_id %}" class="btn-small">SLO Report</a>
           <a href="{% url 'course_students' course.course_id %}" class="btn-small">View Students</a>
           <a href="{% url 'feedback:feedback_search' course.course_id %}" class="btn-small">View Feedback</a>
+        
+          {% if course.exam_set.all %}
+            {% for exam in course.exam_set.all %}
+            <a href="{% url 'course:upload_test_scores' exam.exam_id %}" class="btn-small">
+              Upload Scores: {{ exam.name }}
+            </a>
+            {% endfor %}
+          {% else %}
+            <a href="#" class="btn-small warning">Upload Scores</a>
+          {% endif %}
         </div>
       </div>
       {% endfor %}

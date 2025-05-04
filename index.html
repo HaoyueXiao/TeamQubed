@@ -140,6 +140,75 @@
                 padding: 32px 24px;
             }
         }
+        
+        /* Dark Mode Styles */
+        html.dark-mode {
+            color-scheme: dark;
+        }
+        
+        html.dark-mode body {
+            background-color: #121212;
+            color: #f0f0f0;
+        }
+        
+        html.dark-mode .login-container {
+            background-color: #1e1e1e;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+        }
+        
+        html.dark-mode .logo {
+            color: #f0f0f0;
+        }
+        
+        html.dark-mode .login-title {
+            color: #e0e0e0;
+        }
+        
+        html.dark-mode .login-subtitle {
+            color: #9e9e9e;
+        }
+        
+        html.dark-mode .form-field label {
+            color: #e0e0e0;
+        }
+        
+        html.dark-mode .form-field input {
+            background-color: #2a2a2a;
+            border-color: #444;
+            color: #f0f0f0;
+        }
+        
+        html.dark-mode .form-field input:focus {
+            border-color: #7c4dff;
+            background-color: #333;
+            box-shadow: 0 0 0 4px rgba(124, 77, 255, 0.2);
+        }
+        
+        html.dark-mode .toggle-form a {
+            color: #7c4dff;
+        }
+        
+        /* Enhanced Dark Mode */
+        .dark-mode-transition {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        html.dark-mode .login-button {
+            background: #7c4dff;
+        }
+        
+        html.dark-mode .login-button:hover {
+            background: #6a3afc;
+            box-shadow: 0 4px 10px rgba(124, 77, 255, 0.3);
+        }
+        
+        html.dark-mode .form-field input::placeholder {
+            color: #888;
+        }
+        
+        html.dark-mode .error-message {
+            color: #ff6b6b;
+        }
     </style>
 </head>
 <body>
@@ -206,6 +275,11 @@
         if (auth.isLoggedIn()) {
             window.location.href = 'home.html';
         }
+        
+        // Apply dark mode if needed
+        if (localStorage.getItem('q3_dark_mode') === 'true') {
+            document.documentElement.classList.add('dark-mode');
+        }
 
         const loginForm = document.getElementById('loginForm');
         const registerForm = document.getElementById('registerForm');
@@ -224,14 +298,14 @@
 
         toggleButton.addEventListener('click', toggleForms);
 
-        async function handleLogin(event) {
+        function handleLogin(event) {
             event.preventDefault();
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
             const errorDiv = document.getElementById('loginError');
-
+            
             try {
-                await auth.login(email, password);
+                auth.login(email, password);
                 window.location.href = 'home.html';
             } catch (error) {
                 errorDiv.textContent = error.message;
@@ -239,8 +313,7 @@
             }
         }
 
-
-        async function handleRegister(event) {
+        function handleRegister(event) {
             event.preventDefault();
             const firstName = document.getElementById('registerFirstName').value;
             const lastName = document.getElementById('registerLastName').value;
@@ -248,21 +321,19 @@
             const password = document.getElementById('registerPassword').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
             const errorDiv = document.getElementById('registerError');
-
+            
             try {
                 if (password !== confirmPassword) {
                     throw new Error("Passwords do not match");
                 }
-
-                await auth.register(firstName, lastName, email, password); // await here!
-                await auth.login(email, password);                         // await here!
+                auth.register(firstName, lastName, email, password);
+                auth.login(email, password);
                 window.location.href = 'home.html';
             } catch (error) {
                 errorDiv.textContent = error.message;
                 errorDiv.style.display = 'block';
             }
         }
-
     </script>
 </body>
 </html> 

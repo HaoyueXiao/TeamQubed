@@ -1277,6 +1277,217 @@
         .generate-ai-btn:active {
             transform: translateY(0);
         }
+
+        /* Dark Mode Styles */
+        html.dark-mode {
+            color-scheme: dark;
+        }
+        
+        html.dark-mode body {
+            background-color: #121212;
+            color: #f0f0f0;
+        }
+        
+        html.dark-mode .sidebar {
+            background: #0a0a0a;
+            border-right: 1px solid #2c2c2c;
+        }
+        
+        html.dark-mode .user-icon {
+            background: #7c4dff;
+        }
+        
+        html.dark-mode .logo {
+            color: #e0e0e0;
+        }
+        
+        html.dark-mode .main-content {
+            background-color: #121212;
+        }
+        
+        html.dark-mode .page-title {
+            color: #e0e0e0;
+        }
+        
+        html.dark-mode .students-table {
+            border-color: #2c2c2c;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        html.dark-mode .students-table th {
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            border-color: #2c2c2c;
+        }
+        
+        html.dark-mode .students-table td {
+            border-color: #2c2c2c;
+            color: #e0e0e0;
+        }
+        
+        html.dark-mode .student-row:hover {
+            background-color: #1e1e1e;
+        }
+        
+        html.dark-mode .student-info .name {
+            color: #f0f0f0;
+        }
+        
+        html.dark-mode .student-info .pronouns {
+            color: #aaa;
+        }
+        
+        html.dark-mode .student-avatar {
+            background-color: #333;
+            color: #f0f0f0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        html.dark-mode .report-button {
+            background-color: #252525;
+            color: #e0e0e0;
+            border-color: #444;
+        }
+        
+        html.dark-mode .report-button:hover {
+            background-color: #303030;
+            border-color: #555;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+        
+        html.dark-mode .toggle-slider {
+            background-color: #444;
+        }
+        
+        html.dark-mode .action-button {
+            background-color: #252525;
+            color: #e0e0e0;
+        }
+        
+        html.dark-mode .action-button:hover {
+            background-color: #303030;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+        
+        html.dark-mode .modal-content {
+            background-color: #1a1a1a;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        html.dark-mode .modal-header {
+            border-color: #333;
+        }
+        
+        html.dark-mode .grade-label {
+            color: #f0f0f0;
+        }
+        
+        html.dark-mode .grade-value {
+            color: #f0f0f0;
+        }
+        
+        html.dark-mode .grade-bar-container {
+            background-color: #333;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        
+        html.dark-mode .grade-bar {
+            background-color: #7c4dff;
+        }
+        
+        html.dark-mode .ai-summary-content {
+            background-color: #252525;
+            color: #e0e0e0;
+            border: 1px solid #444;
+        }
+        
+        html.dark-mode .ai-summary-placeholder {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+            border: 1px solid #333;
+        }
+        
+        html.dark-mode .generate-ai-btn {
+            background-color: #7c4dff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        html.dark-mode .generate-ai-btn:hover {
+            background-color: #6a3dfc;
+            box-shadow: 0 2px 8px rgba(124, 77, 255, 0.5);
+        }
+        
+        html.dark-mode .ai-summary-error {
+            background-color: rgba(198, 40, 40, 0.15);
+            color: #ff6b6b;
+            border: 1px solid rgba(255, 107, 107, 0.3);
+        }
+        
+        html.dark-mode .search-input {
+            background-color: #252525;
+            border-color: #444;
+            color: #e0e0e0;
+        }
+        
+        html.dark-mode .search-input:focus {
+            background-color: #303030;
+            border-color: #7c4dff;
+            box-shadow: 0 0 0 2px rgba(124, 77, 255, 0.2);
+        }
+        
+        html.dark-mode .search-input::placeholder {
+            color: #888;
+        }
+        
+        html.dark-mode .add-button {
+            background-color: #7c4dff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        html.dark-mode .add-button:hover {
+            background-color: #6a3dfc;
+            box-shadow: 0 4px 12px rgba(124, 77, 255, 0.4);
+        }
+        
+        /* Transitions for smooth mode switching */
+        .dark-mode-transition {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        html.dark-mode .ai-summary-error {
+            background-color: rgba(198, 40, 40, 0.15);
+            color: #ff6b6b;
+            border: 1px solid rgba(255, 107, 107, 0.3);
+        }
+        
+        /* Pagination dark mode styles */
+        html.dark-mode .pagination {
+            background-color: #121212;
+            border-top: 1px solid #2c2c2c;
+            color: #e0e0e0;
+        }
+        
+        html.dark-mode .pagination-controls {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+        
+        html.dark-mode .pagination-button {
+            background-color: #252525;
+            color: #e0e0e0;
+            border: 1px solid #444;
+        }
+        
+        html.dark-mode .pagination-button:hover:not(:disabled) {
+            background-color: #333;
+            border-color: #555;
+        }
+        
+        html.dark-mode .pagination-button:disabled {
+            background-color: #1e1e1e;
+            color: #666;
+            border-color: #333;
+        }
     </style>
 </head>
 <body>
@@ -1391,6 +1602,12 @@
     <script>
         // Protect this route
         protectRoute();
+        
+        // Apply dark mode immediately if it's enabled in user preferences
+        if (auth.getDarkMode()) {
+            document.documentElement.classList.add('dark-mode-transition');
+            document.documentElement.classList.add('dark-mode');
+        }
 
         // Initialize variables
         const courseId = new URLSearchParams(window.location.search).get('courseId');
@@ -2473,21 +2690,85 @@
             // Convert emphasis (*text*)
             html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
             
+            // Handle lists properly
+            // First, identify list blocks
+            let inList = false;
+            const lines = html.split('\n');
+            
+            for (let i = 0; i < lines.length; i++) {
+                // Check for list items
+                if (lines[i].match(/^\s*[-*] /)) {
+                    // Start a new list if not already in one
+                    if (!inList) {
+                        lines[i] = '<ul>\n' + lines[i];
+                        inList = true;
+                    }
+                    
+                    // Convert the list item
+                    lines[i] = lines[i].replace(/^\s*[-*] (.*)$/, '<li>$1</li>');
+                } else if (inList && lines[i].trim() !== '') {
+                    // End the list if we hit a non-empty, non-list line
+                    lines[i-1] += '\n</ul>';
+                    inList = false;
+                }
+            }
+            
+            // Close any open list at the end
+            if (inList) {
+                lines.push('</ul>');
+            }
+            
+            html = lines.join('\n');
+            
+            // Convert numbered lists
+            inList = false;
+            const numberedLines = html.split('\n');
+            
+            for (let i = 0; i < numberedLines.length; i++) {
+                // Check for numbered list items (1. Item)
+                if (numberedLines[i].match(/^\s*\d+\.\s+/)) {
+                    // Start a new list if not already in one
+                    if (!inList) {
+                        numberedLines[i] = '<ol>\n' + numberedLines[i];
+                        inList = true;
+                    }
+                    
+                    // Convert the list item
+                    numberedLines[i] = numberedLines[i].replace(/^\s*\d+\.\s+(.*)$/, '<li>$1</li>');
+                } else if (inList && numberedLines[i].trim() !== '') {
+                    // End the list if we hit a non-empty, non-list line
+                    numberedLines[i-1] += '\n</ol>';
+                    inList = false;
+                }
+            }
+            
+            // Close any open list at the end
+            if (inList) {
+                numberedLines.push('</ol>');
+            }
+            
+            html = numberedLines.join('\n');
+            
+            // Convert code blocks (```code```)
+            html = html.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
+            
+            // Convert inline code (`code`)
+            html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+            
+            // Convert blockquotes
+            html = html.replace(/^> (.*$)/gm, '<blockquote>$1</blockquote>');
+            
             // Convert line breaks
             html = html.replace(/\n\n/g, '</p><p>');
             html = html.replace(/\n/g, '<br>');
             
-            // Convert lists
-            html = html.replace(/^\s*[-*] (.*)$/gm, '<li>$1</li>');
-            html = html.replace(/<li>(.*?)<\/li>/g, function(match) {
-                return '<ul>' + match + '</ul>';
-            }).replace(/<\/ul><ul>/g, '');
+            // Fix any overlapping tags from multiple replacements
+            html = html.replace(/<\/p><br><p>/g, '</p><p>');
             
-            // Handle horizontal rules (---)
-            html = html.replace(/^---$/gm, '<hr>');
-            
-            // Wrap everything in paragraphs
-            if (!html.startsWith('<h') && !html.startsWith('<ul') && !html.startsWith('<p>')) {
+            // Wrap everything in paragraphs if needed
+            if (!html.startsWith('<h') && !html.startsWith('<ul') && 
+                !html.startsWith('<ol') && !html.startsWith('<p>') &&
+                !html.startsWith('<blockquote') && !html.startsWith('<pre>')) {
                 html = '<p>' + html + '</p>';
             }
             

@@ -2,7 +2,7 @@
 
 Q³ is a streamlined learning management system (LMS) designed for educators to manage courses, track student progress, and analyze performance data. The application provides an intuitive interface for professors to organize their course materials, monitor student grades, and generate insights about class performance.
 
-[final report]{https://docs.google.com/document/d/1Rzubwo-3YqeztZ_Jm7At8Eds5tADsCrqsnSKJ8nqvFM/edit?usp=drive_link}
+[final report](https://docs.google.com/document/d/1Rzubwo-3YqeztZ_Jm7At8Eds5tADsCrqsnSKJ8nqvFM/edit?usp=drive_link)
 
 ## Features
 

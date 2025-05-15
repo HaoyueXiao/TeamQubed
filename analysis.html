@@ -974,35 +974,27 @@
     </div>
 
     <script>
-        // Global variables
         let courseData = null;
         let charts = {};
         let currentCourseId = null;
 
-        // Initialize event listeners
         document.addEventListener('DOMContentLoaded', function() {
             try {
-                // Apply dark mode transition class to enable smooth transitions
                 document.documentElement.classList.add('dark-mode-transition');
                 
-                // Get course ID from URL
                 const urlParams = new URLSearchParams(window.location.search);
                 currentCourseId = urlParams.get('courseId');
                 
-                // Initialize tab functionality
                 initializeTabs();
                 
-                // Check if auth is loaded, and try to load it if not
                 if (typeof auth === 'undefined') {
                     console.log('Auth module not loaded, attempting to load it');
                     
-                    // Debug what scripts are currently loaded
                     console.log('Currently loaded scripts:');
                     Array.from(document.scripts).forEach(script => {
                         console.log(script.src || 'Inline script');
                     });
                     
-                    // Create and append a new script element
                     const authScript = document.createElement('script');
                     authScript.src = 'auth.js';
                     authScript.onload = function() {
@@ -1015,14 +1007,11 @@
                     };
                     document.head.appendChild(authScript);
                 } else {
-                    // Auth is already loaded, proceed with initialization
                     initializeApp();
                 }
                 
-                // Set up theme change listener to update charts when theme changes
                 window.addEventListener('themeChange', function(e) {
                     if (courseData) {
-                        // Redraw charts with new theme
                         updateDashboard(courseData);
                     }
                 });
@@ -1031,24 +1020,19 @@
             }
         });
         
-        // Initialize tabs
         function initializeTabs() {
             const tabs = document.querySelectorAll('.tab');
             
             tabs.forEach(tab => {
                 tab.addEventListener('click', function() {
-                    // Remove active class from all tabs
                     tabs.forEach(t => t.classList.remove('active'));
                     
-                    // Add active class to clicked tab
                     this.classList.add('active');
                     
-                    // Hide all tab content
                     document.querySelectorAll('.tab-content').forEach(content => {
                         content.classList.add('hidden');
                     });
                     
-                    // Show the related tab content
                     const tabName = this.getAttribute('data-tab');
                     document.getElementById(`${tabName}-tab`).classList.remove('hidden');
                 });
@@ -1057,7 +1041,6 @@
 
         function initializeApp() {
             try {
-                // Make auth checks optional so we can test without auth
                 let authEnabled = false;
                 try {
                     authEnabled = typeof auth !== 'undefined' && typeof auth.getCurrentUser === 'function';
@@ -1066,14 +1049,12 @@
                 }
 
                 if (authEnabled) {
-                    // Auth is available, use it
                     try {
                         protectRoute();
                     } catch (e) {
                         console.warn('Could not protect route:', e);
                     }
                     
-                    // Apply dark mode if it's enabled in user preferences
                     if (auth.getDarkMode && auth.getDarkMode()) {
                         document.documentElement.classList.add('dark-mode-transition');
                         document.documentElement.classList.add('dark-mode');
@@ -1081,7 +1062,6 @@
                         document.documentElement.classList.remove('dark-mode');
                     }
                     
-                    // Update user name in sidebar
                     const currentUser = auth.getCurrentUser();
                     if (currentUser) {
                         document.querySelector('.user-name').textContent = currentUser.name;
@@ -1089,18 +1069,14 @@
                             currentUser.firstName ? currentUser.firstName.charAt(0) : currentUser.name.charAt(0);
                     }
                 } else {
-                    // No auth, just use default user display
                     console.log('Running in demo mode without authentication');
                 }
                 
-                // If course ID is available, sync immediately
                 if (currentCourseId) {
                     console.log(`Course ID found in URL: ${currentCourseId}`);
-                    // Start loading state
                     const loading = document.querySelector('.loading-overlay');
                     if (loading) loading.style.display = 'flex';
                     
-                    // Give a small delay to ensure UI is rendered before syncing
                     setTimeout(() => syncCourseData(), 300);
                 } else {
                     console.log('No course ID found in URL');
@@ -1123,7 +1099,6 @@
             }
         }
 
-        // Observer to watch for dark mode class changes on document element
         const observeThemeChanges = () => {
             const targetNode = document.documentElement;
             const config = { attributes: true, attributeFilter: ['class'] };
@@ -1131,7 +1106,6 @@
             const callback = function(mutationsList) {
                 for(const mutation of mutationsList) {
                     if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-                        // Dispatch custom event when dark mode changes
                         window.dispatchEvent(new CustomEvent('themeChange', {
                             detail: {
                                 isDarkMode: targetNode.classList.contains('dark-mode')
@@ -1145,10 +1119,8 @@
             observer.observe(targetNode, config);
         };
 
-        // Start observing theme changes
         observeThemeChanges();
 
-        // Sync course data from the course storage
         function syncCourseData() {
             if (!currentCourseId) {
                 const loading = document.querySelector('.loading-overlay');
@@ -1158,10 +1130,8 @@
             }
             
             try {
-                // Check if auth module is available
                 if (typeof auth === 'undefined') {
                     console.error('Auth module not loaded');
-                    // Try to reload auth.js
                     const authScript = document.createElement('script');
                     authScript.src = 'auth.js';
                     authScript.onload = function() {
@@ -1180,19 +1150,16 @@
                     return;
                 }
                 
-                // Try to retrieve course data using the auth function
                 const courseInfo = auth.getCourseDataForAnalysis(currentCourseId);
                 console.log('Course info from storage:', courseInfo);
                 
                 if (!courseInfo) {
                     console.warn('No course data found for ID:', currentCourseId);
-                    // Try to get course info from user courses as a fallback
                     if (auth.getUserCourses) {
                         const courses = auth.getUserCourses();
                         const course = courses.find(c => c.id == currentCourseId);
                         
                         if (course && course.students && course.students.length > 0) {
-                            // Format course data for analysis and save it
                             const formattedData = {
                                 id: course.id,
                                 name: course.name,
@@ -1211,10 +1178,8 @@
                                 }))
                             };
                             
-                            // Save the formatted data
                             auth.saveCourseDataForAnalysis(currentCourseId, formattedData);
                             
-                            // Process the created data
                             processAndDisplayCourseData(formattedData);
                             return;
                         }
@@ -1226,7 +1191,6 @@
                     return;
                 }
                 
-                // Process the retrieved data
                 processAndDisplayCourseData(courseInfo);
                 
             } catch (error) {
@@ -1237,7 +1201,6 @@
             }
         }
         
-        // Process and display course data
         function processAndDisplayCourseData(courseInfo) {
             try {
                 if (!courseInfo.students || courseInfo.students.length === 0) {
@@ -1246,7 +1209,6 @@
                 
                 console.log('Processing course data:', courseInfo);
                 
-                // Update course title and info
                 const courseTitleElement = document.getElementById('courseTitle');
                 const courseInfoElement = document.getElementById('courseInfo');
                 
@@ -1263,23 +1225,19 @@
                     courseInfoElement.textContent = infoText;
                 }
                 
-                // Format data for processing
                 const studentsData = courseInfo.students.map(student => {
-                    // Create base student record
                     const studentRecord = {
                         "Student ID": student.id,
                         "First Name": student.firstName || student.name.split(' ')[0],
                         "Last Name": student.lastName || student.name.split(' ').slice(1).join(' ')
                     };
                     
-                    // Add assignment data if available
                     if (student.assignments) {
                         student.assignments.forEach((assignment) => {
                             studentRecord[`${assignment.name}`] = assignment.grade || 0;
                         });
                     }
                     
-                    // Add exam data if available
                     if (student.exams) {
                         student.exams.forEach(exam => {
                             studentRecord[exam.name] = exam.grade || 0;
@@ -1295,11 +1253,9 @@
                 
                 console.log('Formatted student data for processing:', studentsData);
                 
-                // Process the data
                 courseData = processData(studentsData);
                 updateDashboard(courseData);
                 
-                // Hide loading overlay when complete
                 const loading = document.querySelector('.loading-overlay');
                 if (loading) loading.style.display = 'none';
             } catch (error) {
@@ -1323,7 +1279,6 @@
                 }
             };
 
-            // Extract assignment columns (case insensitive)
             const assignmentColumns = Object.keys(data[0]).filter(key => 
                 key.toLowerCase().includes('assignment') || 
                 key.toLowerCase().includes('hw') ||
@@ -1336,13 +1291,10 @@
                 throw new Error('No assignment columns found. Column names should include "assignment", "hw", "final", or "midterm"');
             }
 
-            // Store assignment names for labels
             processed.assignments = assignmentColumns;
 
-            // Process each student's data
             data.forEach((row, index) => {
                 try {
-                    // Make sure we can handle case-insensitive column names
                     const studentId = row['Student ID'] || row['student id'] || row['STUDENT ID'] || row['StudentID'] || '';
                     const firstName = row['First Name'] || row['first name'] || row['FIRST NAME'] || row['FirstName'] || '';
                     const lastName = row['Last Name'] || row['last name'] || row['LAST NAME'] || row['LastName'] || '';
@@ -1381,7 +1333,6 @@
                 throw new Error('No valid student data could be processed. Check that your file has the correct column names and data format.');
             }
 
-            // Calculate statistics
             processed.stats.classAverage = processed.students.reduce((sum, student) => 
                 sum + student.average, 0) / processed.students.length;
 
@@ -1399,7 +1350,6 @@
         }
 
         function updateDashboard(data) {
-            // Update statistics
             document.getElementById('classAverage').textContent = 
                 `${data.stats.classAverage.toFixed(1)}%`;
             document.getElementById('passRate').textContent = 
@@ -1409,33 +1359,25 @@
             document.getElementById('topPerformers').textContent = 
                 data.stats.topPerformers;
 
-            // Update charts
             updateGradeDistribution(data);
             updateAssignmentPerformance(data);
             
-            // Update student performance lists
             updateStudentLists(data);
         }
         
-        // Update student performance lists (top, at-risk, and most improved)
         function updateStudentLists(data) {
-            // Sort students by average for top performers
             const sortedByAvg = [...data.students].sort((a, b) => b.average - a.average);
             
-            // Get top 5 students
             const topStudents = sortedByAvg.slice(0, 5);
             
-            // Get students needing support (at-risk)
             const atRiskStudents = [...data.students]
                 .filter(student => student.average < 60)
                 .sort((a, b) => a.average - b.average);
             
-            // Update DOM
             updateStudentList('topStudentsList', topStudents, student => `${student.average.toFixed(1)}%`);
             updateStudentList('supportStudentsList', atRiskStudents, student => `${student.average.toFixed(1)}%`);
         }
         
-        // Helper function to update a student list
         function updateStudentList(elementId, students, scoreFormatter) {
             const listElement = document.getElementById(elementId);
             if (!listElement) return;
@@ -1482,7 +1424,6 @@
             const textColor = isDarkMode ? 'white' : '#333333';
             const gridColor = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.08)';
             
-            // Colors that match the screenshot
             const barColors = isDarkMode ? [
                 'rgba(255, 99, 132, 0.7)',
                 'rgba(255, 159, 64, 0.7)',
@@ -1559,7 +1500,6 @@
                 return sum / data.students.length;
             });
 
-            // Get a gradient for the background
             const gradient = ctx.createLinearGradient(0, 0, 0, 400);
             
             const isDarkMode = document.documentElement.classList.contains('dark-mode');
@@ -1651,7 +1591,6 @@
             });
         }
 
-        // Chatbot functionality
         document.addEventListener('DOMContentLoaded', function() {
             initChatbot();
         });
@@ -1665,7 +1604,6 @@
             const chatMessages = document.getElementById('chatMessages');
             const chatOverlay = document.getElementById('chatOverlay');
             
-            // Toggle chatbot visibility
             chatToggle.addEventListener('click', function() {
                 chatContainer.classList.add('active');
                 chatOverlay.classList.add('active');
@@ -1677,7 +1615,6 @@
                 chatOverlay.classList.remove('active');
             });
             
-            // Close chat when clicking on the backdrop
             chatOverlay.addEventListener('click', function(e) {
                 if (e.target === chatOverlay) {
                     chatContainer.classList.remove('active');
@@ -1685,60 +1622,46 @@
                 }
             });
             
-            // Send message function
             function sendMessage() {
                 const message = chatInput.value.trim();
                 if (!message) return;
                 
-                // Add user message to chat
                 addMessageToChat('user', message);
                 
-                // Clear input
                 chatInput.value = '';
                 
-                // Show thinking indicator
                 const thinkingMessage = document.createElement('div');
                 thinkingMessage.className = 'system-message thinking';
                 thinkingMessage.innerHTML = '<p>Thinking</p><div class="thinking-dots"><span></span><span></span><span></span></div>';
                 chatMessages.appendChild(thinkingMessage);
                 
-                // Scroll to bottom
                 chatMessages.scrollTop = chatMessages.scrollHeight;
                 
-                // Prepare user profile context to enhance the AI responses
                 const userContext = generateUserContext();
                 
-                // Call API
                 callChatbotAPI(message, userContext)
                     .then(response => {
-                        // Remove thinking indicator
                         chatMessages.removeChild(thinkingMessage);
                         
-                        // Add AI response
                         addMessageToChat('system', response);
                     })
                     .catch(error => {
-                        // Remove thinking indicator
                         chatMessages.removeChild(thinkingMessage);
                         
-                        // Add error message
                         addMessageToChat('system', 'Sorry, I encountered an error. Please try again.');
                         console.error('Chatbot API error:', error);
                     });
             }
             
-            // Function to generate context about the current user and course data
             function generateUserContext() {
                 let context = '';
                 
                 try {
-                    // Add user info if available
                     const currentUser = auth.getCurrentUser();
                     if (currentUser) {
                         context += `User: ${currentUser.name} (${currentUser.email})\n`;
                     }
                     
-                    // Add course info if available
                     if (courseData) {
                         context += `Course: ${document.getElementById('courseTitle').textContent}\n`;
                         context += `Students: ${courseData.students.length}\n`;
@@ -1754,7 +1677,6 @@
                 return context;
             }
             
-            // Add message to chat UI
             function addMessageToChat(type, content) {
                 const messageDiv = document.createElement('div');
                 messageDiv.className = type === 'user' ? 'user-message' : 'system-message';
@@ -1765,14 +1687,11 @@
                 messageDiv.appendChild(messageP);
                 chatMessages.appendChild(messageDiv);
                 
-                // Scroll to bottom
                 chatMessages.scrollTop = chatMessages.scrollHeight;
             }
             
-            // Send message on button click
             sendButton.addEventListener('click', sendMessage);
             
-            // Send message on Enter key
             chatInput.addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
                     sendMessage();
@@ -1780,7 +1699,6 @@
             });
 
             setTimeout(() => {
-                // Only show welcome animation if no messages exist (other than the initial one)
                 if (chatMessages.children.length <= 1) {
                     const welcomeMessage = document.createElement('div');
                     welcomeMessage.className = 'system-message';
@@ -1791,10 +1709,8 @@
             }, 500);
         }
         
-        // Function to call the Regent AI API
         async function callChatbotAPI(userMessage, contextInfo) {
             try {
-                // Prepare the input with context if available
                 let input = userMessage;
                 if (contextInfo) {
                     input = `Context:\n${contextInfo}\n\nUser Question: ${userMessage}`;

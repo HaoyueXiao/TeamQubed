@@ -37,7 +37,6 @@
             width: 240px;
         }
 
-        /* User Profile Section */
         .user-profile {
             height: 80px;
             width: 100%;
@@ -81,7 +80,6 @@
             opacity: 1;
         }
 
-        /* Navigation Section */
         .nav-items {
             display: flex;
             flex-direction: column;
@@ -143,7 +141,6 @@
             opacity: 1;
         }
 
-        /* Logo Section */
         .logo-container {
             margin-top: auto;
             height: 80px;
@@ -166,7 +163,6 @@
             color: white;
         }
 
-        /* Main Content */
         .main-content {
             margin-left: 70px;
             flex-grow: 1;
@@ -342,19 +338,16 @@
             padding: 0 8px;
         }
         
-        /* Sun icon */
         .toggle-label::before {
             content: "☀️";
             font-size: 14px;
             transition: opacity 0.3s ease;
         }
         
-        /* Moon icon */
         .toggle-switch input[type="checkbox"]:checked + .toggle-label::before {
             content: "";
         }
         
-        /* Thumb/slider */
         .toggle-label::after {
             content: "";
             position: absolute;
@@ -382,7 +375,6 @@
             font-size: 14px;
         }
         
-        /* Dark mode styles */
         html.dark-mode {
             color-scheme: dark;
         }
@@ -552,15 +544,12 @@
 
     <script src="auth.js"></script>
     <script>
-        // Protect this route
         protectRoute();
 
-        // Apply dark mode if it's enabled in user preferences
         if (auth.getDarkMode()) {
             document.documentElement.classList.add('dark-mode');
         }
 
-        // Load user data
         document.addEventListener('DOMContentLoaded', function() {
             const currentUser = auth.getCurrentUser();
             
@@ -569,7 +558,6 @@
                 return;
             }
             
-            // Get full user data
             const users = JSON.parse(localStorage.getItem('q3_users'));
             const fullUserData = users.find(u => u.id === currentUser.id);
             
@@ -578,26 +566,21 @@
                 return;
             }
             
-            // Update sidebar user info
             document.getElementById('sidebarUserName').textContent = currentUser.name;
             document.getElementById('sidebarUserIcon').textContent = currentUser.name.charAt(0);
             
-            // Populate the form - handle both old and new user data formats
             if (fullUserData.firstName) {
                 document.getElementById('firstName').value = fullUserData.firstName;
                 document.getElementById('lastName').value = fullUserData.lastName || '';
             } else {
-                // Handle legacy data where only name exists
                 const nameParts = fullUserData.name.split(' ');
                 document.getElementById('firstName').value = nameParts[0] || '';
                 document.getElementById('lastName').value = nameParts.slice(1).join(' ') || '';
             }
             document.getElementById('email').value = fullUserData.email;
             
-            // Set dark mode toggle based on user preference
             document.getElementById('darkMode').checked = auth.getDarkMode();
             
-            // Add event listener for dark mode toggle
             document.getElementById('darkMode').addEventListener('change', function(event) {
                 auth.setDarkMode(event.target.checked);
             });
@@ -607,11 +590,9 @@
             auth.logout();
         }
 
-        // Handle form submission
         document.getElementById('settingsForm').addEventListener('submit', function(event) {
             event.preventDefault();
             
-            // Get form values
             const firstName = document.getElementById('firstName').value.trim();
             const lastName = document.getElementById('lastName').value.trim();
             const currentPassword = document.getElementById('currentPassword').value;
@@ -619,49 +600,39 @@
             const confirmPassword = document.getElementById('confirmPassword').value;
             const darkMode = document.getElementById('darkMode').checked;
             
-            // Get button and message elements
             const saveButton = document.getElementById('saveButton');
             const saveMessage = document.getElementById('saveMessage');
             
-            // Get current user
             const currentUser = auth.getCurrentUser();
             
-            // Get all users
             const users = JSON.parse(localStorage.getItem('q3_users'));
             const userIndex = users.findIndex(u => u.id === currentUser.id);
             
-            // Validate current password
             if (users[userIndex].password !== currentPassword) {
                 alert('Current password is incorrect');
                 return;
             }
             
-            // Validate new password if provided
             if (newPassword && newPassword !== confirmPassword) {
                 alert('New passwords do not match');
                 return;
             }
             
-            // Set button to saving state
             saveButton.disabled = true;
             saveButton.textContent = 'Saving...';
             saveButton.classList.add('saving-button');
             
-            // Update user data
             users[userIndex].firstName = firstName;
             users[userIndex].lastName = lastName;
             users[userIndex].name = `${firstName} ${lastName}`;
             users[userIndex].darkMode = darkMode;
             
-            // Update password if provided
             if (newPassword) {
                 users[userIndex].password = newPassword;
             }
             
-            // Save changes
             localStorage.setItem('q3_users', JSON.stringify(users));
             
-            // Update current user session
             localStorage.setItem('q3_current_user', JSON.stringify({
                 id: currentUser.id,
                 name: `${firstName} ${lastName}`,
@@ -671,28 +642,23 @@
                 darkMode: darkMode
             }));
             
-            // Apply dark mode setting
             auth.setDarkMode(darkMode);
             
-            // Update sidebar
             document.getElementById('sidebarUserName').textContent = `${firstName} ${lastName}`;
             document.getElementById('sidebarUserIcon').textContent = firstName.charAt(0);
             
-            // Show success message
             setTimeout(() => {
                 saveButton.textContent = 'Saved!';
                 saveButton.classList.remove('saving-button');
                 saveButton.classList.add('success-button');
                 saveMessage.classList.add('visible');
                 
-                // Reset button after 2 seconds
                 setTimeout(() => {
                     saveButton.textContent = 'Save Settings';
                     saveButton.classList.remove('success-button');
                     saveButton.disabled = false;
                     saveMessage.classList.remove('visible');
                     
-                    // Reset password fields
                     document.getElementById('currentPassword').value = '';
                     document.getElementById('newPassword').value = '';
                     document.getElementById('confirmPassword').value = '';

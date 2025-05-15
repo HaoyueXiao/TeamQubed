@@ -30,7 +30,25 @@ Q³ is a streamlined learning management system (LMS) designed for educators to 
 - LocalStorage
 - Modular architecture for easy extension
 - Responsive design
-  
+
+## Launching the App
+
+```
+# 1. Clone the repo
+git clone https://github.com/HaoyueXiao/TeamQubed.git
+cd TeamQubed
+
+# 2. Serve the static files (pick one):
+
+# A. Easiest — VS Code “Live Server” extension
+#    Right-click index.html -> “Open with Live Server”
+
+# B. Node
+npm install -g http-server      
+http-server .                   # http://localhost:8080
+
+```
+
 ## Getting Started
 
 ### First-time Setup

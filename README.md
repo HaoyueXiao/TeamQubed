@@ -41,13 +41,15 @@ cd TeamQubed
 ### 2. Serve the static files (pick one):
 
 #### A. Easiest — VS Code “Live Server” extension
-**Right-click index.html -> “Open with Live Server”**
+
+```
+Right-click index.html -> “Open with Live Server”
+```
 
 #### B. Node
 ```
 npm install -g http-server      
 http-server .                   # http://localhost:8080
-
 ```
 
 ## App User Guide

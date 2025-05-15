@@ -70,7 +70,10 @@ http-server .                   # http://localhost:8080
 1. Click the "+" button on the home dashboard
 2. Fill in the course details (name, subject, description)
 3. Optionally import students via CSV/Excel file
-4. Click "Create Course"
+```
+# can play around with the `mock_students.xlsx` data
+```
+5. Click "Create Course"
 
 ### Managing Students
 1. Navigate to a course

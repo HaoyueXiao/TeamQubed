@@ -1,6 +1,4 @@
-// User Authentication and Management System
 
-// Storage keys
 const STORAGE_KEYS = {
     USERS: 'q3_users',
     CURRENT_USER: 'q3_current_user',
@@ -8,7 +6,6 @@ const STORAGE_KEYS = {
     COURSE_DATA_PREFIX: 'courseData_'
 };
 
-// Initialize localStorage if needed
 (() => {
     if (!localStorage.getItem(STORAGE_KEYS.USERS)) {
         localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify([]));
@@ -41,7 +38,6 @@ function findCurrentUserIndex(users, currentUser) {
 }
 
 const auth = {
-    // Register a new user
     register(firstName, lastName, email, password) {
         try {
             if (!firstName || !lastName || !email || !password) {
@@ -50,7 +46,6 @@ const auth = {
             
             const users = getUsers();
             
-            // Check if email already exists
             if (users.some(user => user.email === email)) {
                 throw new Error('Email already registered');
             }
@@ -59,11 +54,11 @@ const auth = {
                 id: Date.now(),
                 firstName,
                 lastName,
-                name: `${firstName} ${lastName}`, // Keep for backward compatibility
+                name: `${firstName} ${lastName}`,
                 email,
-                password, // Note: In production, this should be hashed
+                password,
                 courses: [],
-                darkMode: false, // Default to light mode
+                darkMode: false,
                 created: new Date().toISOString()
             };
 
@@ -76,7 +71,6 @@ const auth = {
         }
     },
 
-    // Login user
     login(email, password) {
         try {
             if (!email || !password) {
@@ -90,7 +84,6 @@ const auth = {
                 throw new Error('Invalid credentials');
             }
 
-            // Set current user session
             const userSession = {
                 id: user.id,
                 name: user.name,
@@ -102,7 +95,6 @@ const auth = {
             
             localStorage.setItem(STORAGE_KEYS.CURRENT_USER, JSON.stringify(userSession));
 
-            // Set dark mode based on user preference
             this.setDarkMode(user.darkMode || false);
 
             return user;
@@ -112,12 +104,10 @@ const auth = {
         }
     },
 
-    // Logout user
     logout() {
         try {
             localStorage.setItem(STORAGE_KEYS.CURRENT_USER, '');
             
-            // Reset dark mode to light mode on logout
             localStorage.setItem(STORAGE_KEYS.DARK_MODE, 'false');
             document.documentElement.classList.remove('dark-mode');
             
@@ -129,7 +119,7 @@ const auth = {
         }
     },
 
-    // Get current user
+
     getCurrentUser() {
         try {
             return getCurrentUserObj();
@@ -139,12 +129,12 @@ const auth = {
         }
     },
 
-    // Check if user is logged in
+
     isLoggedIn() {
         return !!this.getCurrentUser();
     },
 
-    // Get user's courses
+
     getUserCourses() {
         try {
             const currentUser = this.getCurrentUser();
@@ -159,7 +149,6 @@ const auth = {
         }
     },
 
-    // Add course for current user
     addCourse(course) {
         try {
             if (!course) return false;
@@ -172,7 +161,6 @@ const auth = {
             
             if (userIndex === -1) return false;
 
-            // Ensure course has all required fields
             const newCourse = {
                 id: course.id || Date.now(),
                 name: course.name,
@@ -193,7 +181,7 @@ const auth = {
         }
     },
 
-    // Update course for current user
+
     updateCourse(courseId, updatedCourse) {
         try {
             const users = getUsers();
@@ -215,13 +203,10 @@ const auth = {
                 throw new Error('Course not found');
             }
             
-            // Update the course
             users[userIndex].courses[courseIndex] = updatedCourse;
             
-            // Save to localStorage
             saveUsers(users);
             
-            // Update analysis data
             const courseDataForAnalysis = {
                 id: updatedCourse.id,
                 name: updatedCourse.name,
@@ -250,7 +235,6 @@ const auth = {
         }
     },
 
-    // Delete course for current user
     deleteCourse(courseId) {
         try {
             if (!courseId) return false;
@@ -266,7 +250,6 @@ const auth = {
             users[userIndex].courses = users[userIndex].courses.filter(c => c.id !== courseId);
             saveUsers(users);
             
-            // Also delete course analysis data if it exists
             localStorage.removeItem(`${STORAGE_KEYS.COURSE_DATA_PREFIX}${courseId}`);
             
             return true;
@@ -276,16 +259,13 @@ const auth = {
         }
     },
 
-    // Get dark mode preference
     getDarkMode() {
         return localStorage.getItem(STORAGE_KEYS.DARK_MODE) === 'true';
     },
 
-    // Set dark mode preference
     setDarkMode(isDark) {
         localStorage.setItem(STORAGE_KEYS.DARK_MODE, isDark.toString());
         
-        // Update the current user's preference if logged in
         const currentUser = this.getCurrentUser();
         if (currentUser) {
             const users = getUsers();
@@ -295,13 +275,11 @@ const auth = {
                 users[userIndex].darkMode = isDark;
                 saveUsers(users);
                 
-                // Update current user session
                 currentUser.darkMode = isDark;
                 localStorage.setItem(STORAGE_KEYS.CURRENT_USER, JSON.stringify(currentUser));
             }
         }
         
-        // Apply dark mode to the document with transition
         document.documentElement.classList.add('dark-mode-transition');
         
         if (isDark) {
@@ -313,12 +291,10 @@ const auth = {
         return isDark;
     },
 
-    // Toggle dark mode
     toggleDarkMode() {
         return this.setDarkMode(!this.getDarkMode());
     },
     
-    // Save course data for analysis
     saveCourseDataForAnalysis(courseId, data) {
         try {
             const analysisData = JSON.parse(localStorage.getItem('q3_analysis_data') || '{}');
@@ -331,7 +307,6 @@ const auth = {
         }
     },
     
-    // Get course data for analysis
     getCourseDataForAnalysis(courseId) {
         try {
             const analysisData = JSON.parse(localStorage.getItem('q3_analysis_data') || '{}');
@@ -343,14 +318,12 @@ const auth = {
     }
 };
 
-// Protect routes - redirect to login if not authenticated
 function protectRoute() {
     if (!auth.isLoggedIn() && !window.location.pathname.endsWith('index.html')) {
         window.location.href = 'index.html';
     }
 }
 
-// Load courses from localStorage on page load
 window.onload = function() {
     try {
         const savedCourses = localStorage.getItem('courses');

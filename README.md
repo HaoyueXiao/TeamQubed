@@ -43,7 +43,10 @@ cd TeamQubed
 #### A. Easiest — VS Code “Live Server” extension
 
 ```
-Right-click index.html -> “Open with Live Server”
+# open VS code
+code
+
+# Right-click index.html -> “Open with Live Server”
 ```
 
 #### B. Node
